@@ -1,670 +1,722 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Abdhul Raheem & Shadab Fatima | Nikah Invitation</title>
-  <meta name="description" content="Join us in celebrating the Nikah of Abdhul Raheem and Shadab Fatima on 29 November 2026." />
+  <title>Nikkah Celebration | Abdhul Raheem &amp; Shadab Fatima — 29th November 2026</title>
+  <meta name="description" content="You are cordially invited to celebrate the auspicious Nikkah ceremony of Abdhul Raheem and Shadab Fatima on Sunday, 29th November 2026 from 7:00 PM onwards at Grand Wedding Hall." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Abdhul Raheem & Shadab Fatima | Nikah Invitation" />
-  <meta property="og:description" content="Join us in celebrating the Nikah of Abdhul Raheem and Shadab Fatima on 29 November 2026." />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph / Meta -->
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/og-preview.png" />
+  <meta property="og:title" content="Nikkah Celebration | Abdhul Raheem &amp; Shadab Fatima" />
+  <meta property="og:description" content="Auspicious Ceremony of Nikkah — Sunday, 29th November 2026 · 7:00 PM Onwards · Grand Wedding Hall." />
+  <meta property="og:image" content="/assets/venue_palace.jpg" />
+  <meta property="og:url" content="https://abdhul-shadab.wedding/" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Abdhul Raheem & Shadab Fatima | Nikah Invitation" />
-  <meta name="twitter:description" content="Join us in celebrating the Nikah of Abdhul Raheem and Shadab Fatima on 29 November 2026." />
+  <meta name="twitter:title" content="Nikkah Celebration | Abdhul Raheem &amp; Shadab Fatima" />
+  <meta name="twitter:description" content="Sunday, 29th November 2026 · 7:00 PM Onwards · Grand Wedding Hall." />
+  <meta name="twitter:image" content="/assets/venue_palace.jpg" />
 
-  <!-- Theme -->
-  <meta name="theme-color" content="#172033" />
+  <meta name="theme-color" content="#070A0F" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Luxury Editorial Serifs, Neutral Sans & Arabic Calligraphy -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@200;300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Alex+Brush&family=Parisienne&family=Great+Vibes&family=Cinzel+Decorative:wght@400;600;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/src/style.css" />
 </head>
-<body>
+<body id="top" class="luxury-editorial-app">
 
   <!-- ============================================================ -->
-  <!-- OPENING SCREEN (Cover) -->
+  <!-- 0. ROYAL CEREMONIAL ENVELOPE OPENING CURTAIN -->
   <!-- ============================================================ -->
-  <div id="cover-screen" class="cover-screen">
-    <!-- Dynamic Flower Petals Canvas -->
-    <canvas id="flower-canvas" class="flower-canvas" aria-hidden="true"></canvas>
+  <!-- ============================================================ -->
+  <!-- 0. BESPOKE ROYAL INVITATION FOLIO (OPENING CEREMONY) -->
+  <!-- ============================================================ -->
+  <div id="envelope-screen" class="envelope-curtain" role="dialog" aria-modal="true" aria-label="Wedding Invitation Opening Ceremony">
+    <div class="envelope-curtain-backdrop"></div>
+    <div class="envelope-ambient-glow" aria-hidden="true"></div>
 
-    <div class="cover-content">
-      <div class="cover-ornament anim-item" data-delay="0.1">
-        <svg viewBox="0 0 120 40" class="ornament-svg">
-          <path d="M10 20 Q30 5 60 20 Q90 35 110 20" fill="none" stroke="#C9A45C" stroke-width="1.2"/>
-          <path d="M10 20 Q30 35 60 20 Q90 5 110 20" fill="none" stroke="#C9A45C" stroke-width="1.2"/>
-          <circle cx="60" cy="20" r="3" fill="#C9A45C"/>
-          <circle cx="10" cy="20" r="2" fill="#C9A45C"/>
-          <circle cx="110" cy="20" r="2" fill="#C9A45C"/>
-        </svg>
-      </div>
-
-      <p class="cover-bismillah anim-item" data-delay="0.3">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-      <p class="cover-bismillah-en anim-item" data-delay="0.6">In the name of Allah<br><span class="cover-bismillah-sub">The most beneficent and most merciful</span></p>
-
-      <div class="cover-ornament-divider anim-item" data-delay="0.85">
-        <svg viewBox="0 0 200 12" class="divider-svg">
-          <line x1="0" y1="6" x2="80" y2="6" stroke="#C9A45C" stroke-width="0.8"/>
-          <polygon points="95,2 100,6 95,10" fill="#C9A45C"/>
-          <polygon points="105,2 100,6 105,10" fill="#C9A45C"/>
-          <line x1="120" y1="6" x2="200" y2="6" stroke="#C9A45C" stroke-width="0.8"/>
-        </svg>
-      </div>
-
-      <!-- Designer Royal Monogram Crest -->
-      <div class="designer-royal-crest anim-item" data-delay="1.0">
-        <div class="crest-shield">
-          <span class="crest-ring-inner"></span>
-          <span class="crest-initials">AR <span class="crest-star">✦</span> SF</span>
+    <div class="envelope-wrapper" id="envelope-box">
+      
+      <!-- Haute-Couture Monogrammed Presentation Folio -->
+      <div class="couture-envelope" id="couture-envelope-card">
+        
+        <!-- Double Hairline Gold Foil Framing & Corner Accents -->
+        <div class="envelope-foil-frame" aria-hidden="true">
+          <span class="foil-corner c-tl"></span>
+          <span class="foil-corner c-tr"></span>
+          <span class="foil-corner c-bl"></span>
+          <span class="foil-corner c-br"></span>
         </div>
-      </div>
 
-      <!-- Designer Preface Tag -->
-      <div class="designer-preface anim-item" data-delay="1.15">
-        <span class="designer-line left"></span>
-        <span class="designer-preface-title">THE WEDDING CELEBRATION OF</span>
-        <span class="designer-line right"></span>
-      </div>
+        <!-- Upper Crest & Arabic Bismillah -->
+        <div class="envelope-top-crest">
+          <div class="env-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+          <span class="env-invitation-tag">THE AUSPICIOUS NIKKAH CELEBRATION</span>
+        </div>
 
-      <!-- Designer Couple Names Showcase -->
-      <div class="designer-couple-frame anim-item" data-delay="1.3">
-        <div class="designer-name-box groom-box">
-          <h1 class="cover-groom designer-name-text">Abdhul Raheem</h1>
-          <div class="designer-name-flourish">
-            <svg viewBox="0 0 160 10" class="name-flourish-svg" aria-hidden="true">
-              <path d="M5 5 Q40 0 80 5 Q120 10 155 5" fill="none" stroke="#B8860B" stroke-width="1.2"/>
-              <circle cx="80" cy="5" r="2.5" fill="#B8860B"/>
+        <!-- Couple Names in Foil Typography -->
+        <div class="envelope-center-monogram">
+          <h2 class="env-couple-name">Abdhul Raheem</h2>
+          <div class="env-ampersand-knot">
+            <span class="knot-line"></span>
+            <span class="knot-symbol">&amp;</span>
+            <span class="knot-line"></span>
+          </div>
+          <h2 class="env-couple-name">Shadab Fatima</h2>
+        </div>
+
+        <!-- Event Date & Sanctuary Venue -->
+        <div class="envelope-meta-strip">
+          <span>Sunday, 29th November 2026</span>
+          <span class="env-dot">•</span>
+          <span>Grand Wedding Hall</span>
+        </div>
+
+        <!-- The Bespoke 3D Vector Wax Seal Stamp Button -->
+        <div class="envelope-seal-anchor">
+          <button type="button" class="bespoke-wax-seal-btn" id="wax-seal-trigger" aria-label="Open Wedding Invitation">
+            <div class="wax-seal-aura"></div>
+            <!-- Pure Vector 3D Luxury Wax Seal SVG -->
+            <svg class="wax-seal-svg" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
+              <defs>
+                <radialGradient id="waxBaseGrad" cx="38%" cy="32%" r="68%">
+                  <stop offset="0%" stop-color="#9E1B2D" />
+                  <stop offset="45%" stop-color="#731120" />
+                  <stop offset="80%" stop-color="#4E0814" />
+                  <stop offset="100%" stop-color="#2D030A" />
+                </radialGradient>
+                <radialGradient id="goldSealGrad" cx="35%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFF5E5" />
+                  <stop offset="30%" stop-color="#E8D7C3" />
+                  <stop offset="65%" stop-color="#C5A880" />
+                  <stop offset="100%" stop-color="#8F6E3E" />
+                </radialGradient>
+                <filter id="sealInnerShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#000000" flood-opacity="0.65"/>
+                </filter>
+              </defs>
+
+              <!-- Organic Wax Edge Silhouette (Realistic melted wax contours) -->
+              <path d="M60 4 C76 3 90 10 102 22 C113 34 118 50 116 66 C114 82 106 97 93 107 C79 117 61 118 45 115 C29 112 15 101 8 86 C1 71 3 53 10 39 C18 24 31 11 48 5 Z" fill="url(#waxBaseGrad)" filter="url(#sealInnerShadow)"/>
+
+              <!-- Outer Wax Bevel Highlight Ring -->
+              <path d="M60 7 C74 6 87 12 98 23 C108 34 112 48 111 63 C109 77 102 91 90 100 C78 109 62 110 47 107 C32 104 20 94 13 81 C7 67 9 52 15 39 C22 26 34 14 49 8 Z" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+
+              <!-- Inner Impressed Coin / Stamped Rim -->
+              <circle cx="60" cy="60" r="42" fill="#5E0F1A" stroke="url(#goldSealGrad)" stroke-width="1.8" />
+              <circle cx="60" cy="60" r="39" fill="none" stroke="url(#goldSealGrad)" stroke-width="0.75" stroke-dasharray="1.5 2.5" opacity="0.85" />
+
+              <!-- Authentic 8-Pointed Khatim Islamic Star -->
+              <rect x="36" y="36" width="48" height="48" fill="none" stroke="url(#goldSealGrad)" stroke-width="1" transform="rotate(0 60 60)" opacity="0.65"/>
+              <rect x="36" y="36" width="48" height="48" fill="none" stroke="url(#goldSealGrad)" stroke-width="1" transform="rotate(45 60 60)" opacity="0.65"/>
+
+              <!-- Central Monogram Letterforms "A & S" in Stately Roman Serif -->
+              <text x="43" y="66" font-family="'Cinzel', serif" font-size="18" font-weight="700" fill="url(#goldSealGrad)" letter-spacing="1">A</text>
+              <text x="59" y="63" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" font-weight="500" fill="url(#goldSealGrad)" text-anchor="middle" opacity="0.9">&amp;</text>
+              <text x="66" y="66" font-family="'Cinzel', serif" font-size="18" font-weight="700" fill="url(#goldSealGrad)" letter-spacing="1">S</text>
+
+              <!-- Subtle Decorative Accent Puncts -->
+              <circle cx="60" cy="27" r="1.5" fill="url(#goldSealGrad)"/>
+              <circle cx="60" cy="93" r="1.5" fill="url(#goldSealGrad)"/>
             </svg>
-          </div>
+
+            <!-- Refined Professional Label -->
+            <span class="seal-call-to-action">
+              <span>OPEN INVITATION</span>
+              <span class="seal-arrow">→</span>
+            </span>
+          </button>
         </div>
 
-        <div class="designer-ampersand-badge anim-item" data-delay="1.6">
-          <span class="amp-wing left">❧</span>
-          <div class="amp-medallion">
-            <span class="amp-glyph">&</span>
-          </div>
-          <span class="amp-wing right">☙</span>
-        </div>
-
-        <div class="designer-name-box bride-box anim-item" data-delay="1.8">
-          <h1 class="cover-bride designer-name-text">Shadab Fatima</h1>
-          <div class="designer-name-flourish">
-            <svg viewBox="0 0 160 10" class="name-flourish-svg" aria-hidden="true">
-              <path d="M5 5 Q40 10 80 5 Q120 0 155 5" fill="none" stroke="#B8860B" stroke-width="1.2"/>
-              <circle cx="80" cy="5" r="2.5" fill="#B8860B"/>
-            </svg>
-          </div>
-        </div>
       </div>
 
-      <p class="cover-inshallah anim-item" data-delay="2.1">
-        <span class="inshallah-sparkle">✦</span> InshaAllah <span class="inshallah-sparkle">✦</span>
-      </p>
-
-      <div class="cover-date anim-item" data-delay="2.3">
-        <div class="designer-date-pill">
-          <span class="designer-date-day">SUNDAY</span>
-          <span class="designer-date-dot">•</span>
-          <span class="designer-date-num">29 NOVEMBER 2026</span>
-          <span class="designer-date-dot">•</span>
-          <span class="designer-date-city">BENGALURU</span>
-        </div>
-      </div>
-
-      <div class="cover-countdown anim-item" data-delay="2.6">
-        <div class="mini-countdown" id="cover-countdown">
-          <div class="mini-countdown-unit">
-            <span class="mini-countdown-num" id="cover-days">--</span>
-            <span class="mini-countdown-label">DAYS</span>
-          </div>
-          <div class="mini-countdown-sep">:</div>
-          <div class="mini-countdown-unit">
-            <span class="mini-countdown-num" id="cover-hours">--</span>
-            <span class="mini-countdown-label">HOURS</span>
-          </div>
-          <div class="mini-countdown-sep">:</div>
-          <div class="mini-countdown-unit">
-            <span class="mini-countdown-num" id="cover-mins">--</span>
-            <span class="mini-countdown-label">MIN</span>
-          </div>
-          <div class="mini-countdown-sep">:</div>
-          <div class="mini-countdown-unit">
-            <span class="mini-countdown-num" id="cover-secs">--</span>
-            <span class="mini-countdown-label">SEC</span>
-          </div>
-        </div>
-      </div>
-
-      <button class="cover-btn anim-item" data-delay="2.8" id="open-invitation-btn" aria-label="Open Invitation">
-        <span class="cover-btn-halo" aria-hidden="true"></span>
-        <span class="cover-btn-content">✦ OPEN INVITATION</span>
-      </button>
     </div>
+  </div>
 
-    <!-- Split panels for transition -->
-    <div class="cover-panel cover-panel-left"></div>
-    <div class="cover-panel cover-panel-right"></div>
+  <!-- Ambient Gold Dust Interactive Canvas Background -->
+  <canvas id="ambient-gold-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Interactive Custom Cursor (Fine pointer devices only) -->
+  <div class="custom-cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Toast Notification Capsule -->
+  <div class="toast-capsule" id="luxury-toast" role="status" aria-live="polite" aria-hidden="true">
+    <span class="toast-gem">✦</span>
+    <span class="toast-text" id="toast-message">Notification</span>
   </div>
 
   <!-- ============================================================ -->
-  <!-- MAIN INVITATION -->
+  <!-- 1. GLOBAL STICKY LUXURY NAVIGATION -->
   <!-- ============================================================ -->
-  <main id="main-invitation" class="main-invitation" aria-hidden="true">
-
-    <!-- SECTION 2: COUPLE -->
-    <section id="section-couple" class="section section-couple scroll-reveal">
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg">
-            <path d="M10 20 Q30 5 60 20 Q90 35 110 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <path d="M10 20 Q30 35 60 20 Q90 5 110 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2.5" fill="#C9A45C"/>
+  <header class="luxury-header" id="luxury-header">
+    <div class="header-shell">
+      
+      <!-- Intertwined Typographic Monogram Logo -->
+      <a href="#hero" class="brand-crest-link" id="brand-link" aria-label="Abdhul Raheem &amp; Shadab Fatima — Return to Top">
+        <span class="crest-sigil">
+          <svg viewBox="0 0 44 44" width="36" height="36" class="crest-sigil-svg" aria-hidden="true">
+            <rect x="9" y="9" width="26" height="26" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+            <rect x="9" y="9" width="26" height="26" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.4" transform="rotate(45 22 22)"/>
+            <circle cx="22" cy="22" r="17" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2, 2" opacity="0.6"/>
+            <text x="15" y="27" font-family="'Cinzel Decorative', serif" font-size="14" font-weight="600" fill="currentColor">A</text>
+            <text x="23" y="24" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="10" fill="currentColor" opacity="0.8">&amp;</text>
+            <text x="29" y="27" font-family="'Cinzel Decorative', serif" font-size="14" font-weight="600" fill="currentColor">S</text>
           </svg>
+        </span>
+        <div class="brand-text-block">
+          <span class="brand-monogram-initials">A <span class="amp">&amp;</span> S</span>
+          <span class="brand-ceremony-label">NIKKAH · 29 NOV 2026</span>
         </div>
-        <p class="section-subtitle">WITH THE BLESSINGS OF ALLAH</p>
-        <h2 class="couple-name groom-name gold-shimmer-text">Abdhul Raheem</h2>
-        <span class="couple-ampersand">&</span>
-        <h2 class="couple-name bride-name gold-shimmer-text">Shadab Fatima</h2>
-        <div class="couple-sketch-wrap">
-          <div class="sketch-arch-frame">
-            <div class="arch-peak">
-              <svg viewBox="0 0 60 20" class="arch-peak-svg" aria-hidden="true">
-                <path d="M30 2 C25 9 16 15 2 18 C16 16 25 13 30 7 C35 13 44 16 58 18 C44 15 35 9 30 2 Z" fill="#C9A45C"/>
-                <circle cx="30" cy="3" r="2" fill="#C9A45C"/>
-              </svg>
-            </div>
-            <div class="sketch-inner-border">
-              <img 
-                src="/couple-sketch.jpg" 
-                alt="Fine art sketch illustration of Abdhul Raheem and Shadab Fatima in Nikah wedding attire" 
-                class="couple-sketch-img"
-                width="280"
-                height="373"
-                loading="eager"
-              />
-            </div>
-          </div>
-        </div>
-        <p class="couple-tagline">"Two souls, one beautiful journey begins with Allah's grace."</p>
-        <div class="gold-ornament-bottom">
-          <svg viewBox="0 0 200 12" class="divider-svg">
-            <line x1="0" y1="6" x2="80" y2="6" stroke="#C9A45C" stroke-width="0.6"/>
-            <polygon points="95,3 100,6 95,9" fill="#C9A45C"/>
-            <polygon points="105,3 100,6 105,9" fill="#C9A45C"/>
-            <line x1="120" y1="6" x2="200" y2="6" stroke="#C9A45C" stroke-width="0.6"/>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: NIKAH -->
-    <section id="section-nikah" class="section section-nikah scroll-reveal">
-      <div class="islamic-pattern"></div>
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2" fill="#C9A45C"/>
-          </svg>
-        </div>
-        <h2 class="section-heading gold-text gold-shimmer-text">NIKAH</h2>
-        <div class="nikah-details">
-          <p class="nikah-day">SUNDAY</p>
-          <p class="nikah-date">29 NOVEMBER 2026</p>
-          <div class="nikah-divider">
-            <svg viewBox="0 0 100 8" class="mini-divider">
-              <line x1="10" y1="4" x2="42" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-              <circle cx="50" cy="4" r="2" fill="#C9A45C"/>
-              <line x1="58" y1="4" x2="90" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-            </svg>
-          </div>
-          <p class="nikah-time">AFTER NAMAZ-E-MAGHRIB</p>
-          <p class="nikah-venue">BEARY'S AMITY</p>
-          <p class="nikah-city">BENGALURU</p>
-        </div>
-
-        <div class="card-action-group">
-          <a href="https://www.google.com/maps/search/Beary's+Amity+Bengaluru" target="_blank" rel="noopener noreferrer" class="btn btn-gold" aria-label="View Nikah Location on Google Maps">
-            <span class="btn-icon">📍</span> VIEW LOCATION
-          </a>
-          <button type="button" class="btn btn-outline btn-add-cal" data-event="nikah" aria-label="Add Nikah to Calendar">
-            <span class="btn-icon">📅</span> ADD TO CALENDAR
-          </button>
-          <button type="button" class="btn btn-ghost btn-copy-address" data-copy="Beary's Amity, Bengaluru" aria-label="Copy Nikah Address">
-            <span class="btn-icon">📋</span> COPY ADDRESS
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: COUNTDOWN -->
-    <section id="section-countdown" class="section section-countdown scroll-reveal">
-      <div class="section-inner">
-        <p class="countdown-heading-pre">UNTIL WE SAY</p>
-        <h2 class="countdown-heading gold-shimmer-text">"QUBOOL HAI"</h2>
-        <div class="countdown-display" id="main-countdown">
-          <div class="countdown-unit">
-            <div class="countdown-num-wrap">
-              <span class="countdown-num" id="main-days">--</span>
-            </div>
-            <span class="countdown-label">DAYS</span>
-          </div>
-          <div class="countdown-unit">
-            <div class="countdown-num-wrap">
-              <span class="countdown-num" id="main-hours">--</span>
-            </div>
-            <span class="countdown-label">HOURS</span>
-          </div>
-          <div class="countdown-unit">
-            <div class="countdown-num-wrap">
-              <span class="countdown-num" id="main-mins">--</span>
-            </div>
-            <span class="countdown-label">MINUTES</span>
-          </div>
-          <div class="countdown-unit">
-            <div class="countdown-num-wrap">
-              <span class="countdown-num" id="main-secs">--</span>
-            </div>
-            <span class="countdown-label">SECONDS</span>
-          </div>
-        </div>
-        <p class="countdown-date">29 NOVEMBER 2026</p>
-        <div id="countdown-complete" class="countdown-complete hidden">
-          <p class="today-text">Today is the blessed day.</p>
-          <div class="today-sparkle">✦</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 5: RECEPTION -->
-    <section id="section-reception" class="section section-reception scroll-reveal">
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2" fill="#C9A45C"/>
-          </svg>
-        </div>
-        <h2 class="section-heading gold-shimmer-text">RECEPTION</h2>
-        <div class="reception-details">
-          <p class="reception-day">TUESDAY</p>
-          <p class="reception-date">8 DECEMBER 2026</p>
-          <div class="nikah-divider">
-            <svg viewBox="0 0 100 8" class="mini-divider">
-              <line x1="10" y1="4" x2="42" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-              <circle cx="50" cy="4" r="2" fill="#C9A45C"/>
-              <line x1="58" y1="4" x2="90" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-            </svg>
-          </div>
-          <p class="reception-time">5 PM — 10 PM</p>
-          <p class="reception-venue">SILVERCLOUD PRIVATE RESORT</p>
-          <p class="reception-venue-sub">WEDDING BANQUET HALL</p>
-          <p class="reception-address">CHALALAKKAL, PARAPPUR<br>KERALA 680552</p>
-        </div>
-
-        <div class="card-action-group">
-          <a href="https://www.google.com/maps/search/Silvercloud+Private+Resort+Wedding+Banquet+Hall+Chalalakkal+Parappur+Kerala" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="Get directions to Reception venue">
-            <span class="btn-icon">📍</span> GET DIRECTIONS
-          </a>
-          <button type="button" class="btn btn-outline btn-add-cal" data-event="reception" aria-label="Add Reception to Calendar">
-            <span class="btn-icon">📅</span> ADD TO CALENDAR
-          </button>
-          <button type="button" class="btn btn-ghost btn-copy-address" data-copy="Silvercloud Private Resort, Wedding Banquet Hall, Chalalakkal, Parappur, Kerala 680552" aria-label="Copy Reception Address">
-            <span class="btn-icon">📋</span> COPY ADDRESS
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- EVENT TIMELINE -->
-    <section class="section section-timeline scroll-reveal">
-      <div class="section-inner">
-        <h2 class="section-heading">CELEBRATIONS</h2>
-        <div class="timeline">
-          <div class="timeline-line"></div>
-          <div class="timeline-item scroll-reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-date-badge">29 NOV 2026</div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">NIKAH CEREMONY</h3>
-              <p class="timeline-detail">After Namaz-e-Maghrib</p>
-              <p class="timeline-venue">Beary's Amity, Bengaluru</p>
-            </div>
-          </div>
-          <div class="timeline-item scroll-reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-date-badge">8 DEC 2026</div>
-            <div class="timeline-content">
-              <h3 class="timeline-title">GRAND RECEPTION</h3>
-              <p class="timeline-detail">5:00 PM – 10:00 PM</p>
-              <p class="timeline-venue">Silvercloud Private Resort, Kerala</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: FAMILY -->
-    <section id="section-family" class="section section-family scroll-reveal">
-      <div class="section-inner">
-        <h2 class="section-heading">WITH THE BLESSINGS OF<br>OUR FAMILIES</h2>
-
-        <div class="family-group scroll-reveal">
-          <p class="family-parent-name">Mr. Shafi Aboobacker</p>
-          <p class="family-and">&</p>
-          <p class="family-parent-name">Mrs. Shamshad Shafi</p>
-          <p class="family-address">Madathiparambil House<br>Brahmakulam, Guruvayur</p>
-          <p class="family-contact">Mob: <a href="tel:9833733594">9833733594</a> / <a href="tel:7977808759">7977808759</a></p>
-        </div>
-
-        <div class="family-divider">
-          <svg viewBox="0 0 100 8" class="mini-divider">
-            <line x1="10" y1="4" x2="42" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-            <circle cx="50" cy="4" r="2" fill="#C9A45C"/>
-            <line x1="58" y1="4" x2="90" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-          </svg>
-        </div>
-
-        <div class="family-group scroll-reveal">
-          <h3 class="family-person-name gold-shimmer-text">ABDHUL RAHEEM</h3>
-          <p class="family-relation">Grand S/o</p>
-          <p class="family-detail">Late. PM Aboobacker & Sharifa</p>
-          <p class="family-detail-and">and</p>
-          <p class="family-detail">Late Mohammad Haji & Late Hawabi</p>
-        </div>
-
-        <div class="family-divider">
-          <svg viewBox="0 0 100 8" class="mini-divider">
-            <line x1="10" y1="4" x2="42" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-            <circle cx="50" cy="4" r="2" fill="#C9A45C"/>
-            <line x1="58" y1="4" x2="90" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-          </svg>
-        </div>
-
-        <div class="family-group scroll-reveal">
-          <h3 class="family-person-name gold-shimmer-text">SHADAB FATIMA</h3>
-          <p class="family-relation">D/o</p>
-          <p class="family-detail">Mr. Mohammad Shujathulla</p>
-          <p class="family-detail-and">&</p>
-          <p class="family-detail">Nameera Shujath</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- INVITATION MESSAGE -->
-    <section class="section section-message scroll-reveal">
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2" fill="#C9A45C"/>
-          </svg>
-        </div>
-        <p class="invitation-text">"We cordially invite your esteemed presence with family on the auspicious occasion of the marriage of our son."</p>
-        <div class="presence-block">
-          <p class="presence-line">YOUR PRESENCE</p>
-          <p class="presence-line">YOUR PRAYERS</p>
-          <p class="presence-line">YOUR BLESSINGS</p>
-        </div>
-        <p class="presence-sub">would mean the world to us.</p>
-      </div>
-    </section>
-
-    <!-- SECTION: DUAS & BLESSINGS (Interactive Guestbook) -->
-    <section id="section-duas" class="section section-duas scroll-reveal">
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2" fill="#C9A45C"/>
-          </svg>
-        </div>
-        <p class="section-subtitle">SEND YOUR LOVE & PRAYERS</p>
-        <h2 class="section-heading gold-text gold-shimmer-text">BLESSINGS & DUAS</h2>
-        <p class="duas-intro">Shower Abdhul Raheem & Shadab Fatima with your heartfelt prayers as they embark on this sacred bond.</p>
-
-        <!-- Quick Dua Chips -->
-        <div class="quick-duas">
-          <button type="button" class="dua-chip" data-text="Barakallahu lakuma wa baraka alaikuma wa jama'a bainakuma fee khair! May Allah grant you endless love and peace.">🤲 Barakallahu Lakuma</button>
-          <button type="button" class="dua-chip" data-text="Heartiest congratulations to dearest Abdhul Raheem & Shadab Fatima! Wishing you a joyful and blessed married life.">✨ Congratulations</button>
-          <button type="button" class="dua-chip" data-text="May Allah bless this beautiful union with affection, prosperity, good health and mutual understanding. Ameen!">🕊️ Peace & Barakah</button>
-          <button type="button" class="dua-chip" data-text="So delighted for both of you! May your love grow deeper with every passing day.">💐 Lifelong Bliss</button>
-        </div>
-
-        <!-- Dua Form -->
-        <form id="dua-form" class="dua-form">
-          <div class="form-group">
-            <input type="text" id="dua-sender" class="form-input" placeholder="Your Name / Family" required maxlength="50" autocomplete="name" />
-          </div>
-          <div class="form-group">
-            <textarea id="dua-message" class="form-textarea" placeholder="Write your Dua or heartfelt wedding wish for Abdhul Raheem & Shadab Fatima..." required rows="3" maxlength="280"></textarea>
-          </div>
-          <button type="submit" class="btn btn-gold btn-send-dua" id="btn-send-dua">
-            <span>SEND BLESSING</span> ✦
-          </button>
-          <p class="dua-feedback hidden" id="dua-feedback">Your blessing has been sent with love! 💖</p>
-        </form>
-
-        <!-- Duas Carousel Header & Counter -->
-        <div class="duas-carousel-header">
-          <div class="duas-counter-badge" id="duas-counter-badge">
-            <span class="counter-sparkle">✦</span>
-            <span id="duas-count-text">3 Heartfelt Wishes</span>
-            <span class="counter-sparkle">✦</span>
-          </div>
-          <div class="duas-carousel-nav">
-            <button type="button" class="carousel-nav-btn prev" id="dua-prev-btn" aria-label="Previous wish" title="Previous wish">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <span class="carousel-page-indicator" id="carousel-page-indicator">1 / 3</span>
-            <button type="button" class="carousel-nav-btn next" id="dua-next-btn" aria-label="Next wish" title="Next wish">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Duas Carousel Container -->
-        <div class="duas-carousel-container" id="duas-carousel-container">
-          <div class="duas-carousel-track" id="duas-carousel-track" role="region" aria-label="Wedding Wishes Carousel" tabindex="0">
-            <!-- Populated dynamically via JS -->
-          </div>
-        </div>
-
-        <!-- Carousel Pagination Dots -->
-        <div class="duas-dots-container" id="duas-dots-container" role="tablist" aria-label="Wishes Carousel Slides">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 7: VENUE CARDS -->
-    <section id="section-venue" class="section section-venue scroll-reveal">
-      <div class="section-inner">
-        <h2 class="section-heading">VENUES</h2>
-
-        <div class="venue-card scroll-reveal">
-          <div class="venue-icon">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#C9A45C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
-          <h3 class="venue-card-title">NIKAH VENUE</h3>
-          <p class="venue-card-name">Beary's Amity</p>
-          <p class="venue-card-city">Bengaluru</p>
-          <div class="venue-card-buttons">
-            <a href="https://www.google.com/maps/search/Beary's+Amity+Bengaluru" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" aria-label="Get directions to Nikah venue">
-              MAP DIRECTIONS
-            </a>
-            <button type="button" class="btn btn-ghost btn-sm btn-copy-address" data-copy="Beary's Amity, Bengaluru" aria-label="Copy Nikah Address">
-              COPY ADDRESS
-            </button>
-          </div>
-        </div>
-
-        <div class="venue-card scroll-reveal">
-          <div class="venue-icon">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#C9A45C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
-          <h3 class="venue-card-title">RECEPTION VENUE</h3>
-          <p class="venue-card-name">Silvercloud Private Resort</p>
-          <p class="venue-card-sub">Wedding Banquet Hall</p>
-          <p class="venue-card-address">Chalalakkal, Parappur<br>Kerala 680552</p>
-          <div class="venue-card-buttons">
-            <a href="https://www.google.com/maps/search/Silvercloud+Private+Resort+Wedding+Banquet+Hall+Chalalakkal+Parappur+Kerala" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" aria-label="Get directions to Reception venue">
-              MAP DIRECTIONS
-            </a>
-            <button type="button" class="btn btn-ghost btn-sm btn-copy-address" data-copy="Silvercloud Private Resort, Wedding Banquet Hall, Chalalakkal, Parappur, Kerala 680552" aria-label="Copy Reception Address">
-              COPY ADDRESS
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QR CODES -->
-    <section class="section section-qr scroll-reveal">
-      <div class="section-inner">
-        <h2 class="section-heading">VENUE MAPS</h2>
-        <div class="qr-grid">
-          <div class="qr-item scroll-reveal">
-            <canvas id="qr-nikah" class="qr-canvas"></canvas>
-            <p class="qr-label">NIKAH VENUE</p>
-            <p class="qr-sublabel">SCAN FOR DIRECTIONS</p>
-          </div>
-          <div class="qr-item scroll-reveal">
-            <canvas id="qr-reception" class="qr-canvas"></canvas>
-            <p class="qr-label">RECEPTION VENUE</p>
-            <p class="qr-sublabel">SCAN FOR DIRECTIONS</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SHARE -->
-    <section class="section section-share scroll-reveal">
-      <div class="section-inner">
-        <button class="btn btn-share" id="share-btn" aria-label="Share Invitation">
-          ↗ SHARE INVITATION
-        </button>
-        <p class="share-copied hidden" id="share-copied">Invitation link copied to clipboard.</p>
-      </div>
-    </section>
-
-    <!-- SECTION 8: CLOSING -->
-    <section class="section section-closing scroll-reveal">
-      <div class="section-inner">
-        <div class="gold-ornament-top">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <path d="M20 20 Q40 32 60 20 Q80 8 100 20" fill="none" stroke="#C9A45C" stroke-width="1"/>
-            <circle cx="60" cy="20" r="2" fill="#C9A45C"/>
-          </svg>
-        </div>
-        <p class="closing-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-        <h2 class="closing-groom gold-shimmer-text">ABDHUL RAHEEM</h2>
-        <span class="closing-amp">&</span>
-        <h2 class="closing-bride gold-shimmer-text">SHADAB FATIMA</h2>
-        <p class="closing-date">29 • 11 • 2026</p>
-        <div class="closing-divider">
-          <svg viewBox="0 0 100 8" class="mini-divider">
-            <line x1="10" y1="4" x2="42" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-            <circle cx="50" cy="4" r="2" fill="#C9A45C"/>
-            <line x1="58" y1="4" x2="90" y2="4" stroke="#C9A45C" stroke-width="0.6"/>
-          </svg>
-        </div>
-        <p class="closing-message">"With love, prayers and gratitude."</p>
-        <p class="closing-from">Best compliments from<br>Friends & Family</p>
-        <div class="gold-ornament-bottom closing-ornament">
-          <svg viewBox="0 0 120 40" class="ornament-svg small">
-            <path d="M20 20 Q40 8 60 20 Q80 32 100 20" fill="none" stroke="#C9A45C" stroke-width="0.8"/>
-            <path d="M20 20 Q40 32 60 20 Q80 8 100 20" fill="none" stroke="#C9A45C" stroke-width="0.8"/>
-            <circle cx="60" cy="20" r="1.5" fill="#C9A45C"/>
-          </svg>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FLOATING NAV BUTTON -->
-  <button class="nav-fab hidden" id="nav-fab" aria-label="Open Navigation Menu">
-    <span class="nav-fab-icon">☰</span>
-  </button>
-
-  <!-- BOTTOM SHEET NAV -->
-  <div class="bottom-sheet-backdrop hidden" id="bottom-sheet-backdrop"></div>
-  <div class="bottom-sheet hidden" id="bottom-sheet">
-    <div class="bottom-sheet-handle"></div>
-    <nav class="bottom-sheet-nav" aria-label="Main Navigation">
-      <a href="#section-couple" class="bottom-sheet-link" data-nav>HOME</a>
-      <a href="#section-nikah" class="bottom-sheet-link" data-nav>NIKAH</a>
-      <a href="#section-countdown" class="bottom-sheet-link" data-nav>COUNTDOWN</a>
-      <a href="#section-reception" class="bottom-sheet-link" data-nav>RECEPTION</a>
-      <a href="#section-family" class="bottom-sheet-link" data-nav>FAMILY</a>
-      <a href="#section-duas" class="bottom-sheet-link" data-nav>DUAS & WISHES</a>
-      <a href="#section-venue" class="bottom-sheet-link" data-nav>VENUES</a>
-    </nav>
-  </div>
-
-  <!-- COMPACT LUXURY MUSIC TOGGLE & AUDIO -->
-  <button class="music-fab" id="music-fab" aria-label="Toggle background music" title="Toggle background music">
-    <span class="music-fab-pulse" aria-hidden="true"></span>
-    <!-- Playing icon: note + animated soundwaves -->
-    <span class="music-icon-playing" aria-hidden="true">
-      <svg class="music-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-      </svg>
-      <span class="music-bars">
-        <span class="bar bar-1"></span>
-        <span class="bar bar-2"></span>
-        <span class="bar bar-3"></span>
-      </span>
-    </span>
-    <!-- Paused icon: note with muted strike slash -->
-    <span class="music-icon-paused" aria-hidden="true">
-      <svg class="music-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-        <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.73 4.73c-.49.33-1.07.55-1.73.68V21c1.5-.23 2.84-.87 3.91-1.79l2.82 2.82 1.27-1.27L4.27 3zM14 7h4V3h-6v5.18l2 2V7z"/>
-      </svg>
-    </span>
-  </button>
-  <div id="music-toast" class="music-toast hidden" aria-live="polite"></div>
-  <audio id="bg-music" loop preload="auto" src="/audio/cant-help-falling-in-love.mp3"></audio>
-
-  <!-- CALENDAR MODAL -->
-  <div class="calendar-modal-backdrop hidden" id="calendar-modal-backdrop"></div>
-  <div class="calendar-modal hidden" id="calendar-modal" role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
-    <button class="cal-modal-close" id="cal-modal-close" aria-label="Close Calendar Modal">✕</button>
-    <div class="cal-modal-header">
-      <span class="cal-modal-icon">📅</span>
-      <h3 class="cal-modal-title" id="cal-modal-title">Add to Calendar</h3>
-      <p class="cal-modal-subtitle" id="cal-modal-subtitle">Save the date for Abdhul Raheem & Shadab Fatima's Wedding</p>
-    </div>
-    <div class="cal-modal-actions">
-      <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-cal" id="cal-google-link">
-        <span class="cal-btn-icon">🗓️</span> Google Calendar
       </a>
-      <button type="button" class="btn btn-cal" id="cal-ical-btn">
-        <span class="cal-btn-icon">🍏</span> Apple Calendar / iCal (.ics)
+
+      <!-- Desktop Minimalist Navigation -->
+      <nav class="desktop-luxury-nav" aria-label="Primary Navigation">
+        <a href="#story" class="nav-link-item" data-nav-item>
+          <span class="link-label">The Covenant</span>
+        </a>
+        <a href="#schedule" class="nav-link-item" data-nav-item>
+          <span class="link-label">Ceremony Timeline</span>
+        </a>
+        <a href="#venue" class="nav-link-item" data-nav-item>
+          <span class="link-label">The Sanctuary</span>
+        </a>
+        <a href="#benedictions" class="nav-link-item" data-nav-item>
+          <span class="link-label">Duas &amp; Mubarak</span>
+        </a>
+      </nav>
+
+      <!-- Action Group -->
+      <div class="header-controls">
+        
+        <!-- Replay Envelope Button -->
+        <button type="button" class="btn-replay-envelope" id="replay-envelope-btn" aria-label="Replay Royal Invitation Opening" title="Replay Opening Ceremony">
+          <span class="replay-icon">↺</span>
+          <span class="replay-label">SEAL</span>
+        </button>
+
+        <!-- Ambient Sound Accompaniment Button -->
+        <button type="button" class="audio-control-pill" id="audio-toggle-btn" aria-label="Toggle ambient musical accompaniment" title="Toggle ambient music">
+          <span class="audio-bars-graphic" aria-hidden="true">
+            <span class="vbar bar-1"></span>
+            <span class="vbar bar-2"></span>
+            <span class="vbar bar-3"></span>
+            <span class="vbar bar-4"></span>
+          </span>
+          <span class="audio-text-label">SERENITY</span>
+        </button>
+
+        <!-- Venue Direct Action Button -->
+        <a href="#venue" class="btn-header-venue" aria-label="View Sanctuary Venue &amp; Directions">
+          <span>VENUE</span>
+          <span class="pulsing-gem" aria-hidden="true">📍</span>
+        </a>
+
+        <!-- Mobile Drawer Hamburger Toggle -->
+        <button type="button" class="mobile-hamburger-btn" id="hamburger-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="editorial-drawer">
+          <span class="ham-stripe top-stripe"></span>
+          <span class="ham-stripe bot-stripe"></span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- MOBILE SLIDE-IN EDITORIAL DRAWER -->
+  <!-- ============================================================ -->
+  <div class="drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+  <aside class="luxury-drawer" id="editorial-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="drawer-header-strip">
+      <div class="drawer-crest-title">
+        <span class="d-monogram">A &amp; S</span>
+        <span class="d-sub">NIKKAH CEREMONY</span>
+      </div>
+      <button type="button" class="drawer-dismiss-btn" id="drawer-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.8" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
-  </div>
+
+    <nav class="drawer-navigation-links" aria-label="Mobile Links">
+      <a href="#hero" class="drawer-nav-item" data-drawer-link>
+        <span class="nav-num">01</span>
+        <span class="nav-name">The Grand Portal</span>
+      </a>
+      <a href="#story" class="drawer-nav-item" data-drawer-link>
+        <span class="nav-num">02</span>
+        <span class="nav-name">Sacred Covenant &amp; Lineage</span>
+      </a>
+      <a href="#schedule" class="drawer-nav-item" data-drawer-link>
+        <span class="nav-num">03</span>
+        <span class="nav-name">Ceremony &amp; Timeline</span>
+      </a>
+      <a href="#venue" class="drawer-nav-item" data-drawer-link>
+        <span class="nav-num">04</span>
+        <span class="nav-name">The Sanctuary &amp; Venue</span>
+      </a>
+      <a href="#benedictions" class="drawer-nav-item" data-drawer-link>
+        <span class="nav-num">05</span>
+        <span class="nav-name">Shower of Mubarak &amp; Duas</span>
+      </a>
+    </nav>
+
+    <div class="drawer-action-block">
+      <a href="https://maps.app.goo.gl/7CWHe2UekRWbMbiVA?g_st=aw" target="_blank" rel="noopener noreferrer" class="btn btn-gold-foil btn-block" data-drawer-link>
+        <span>GET VENUE DIRECTIONS</span>
+        <span class="btn-sparkle">📍</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- 2. HERO SECTION: ARCHITECTURAL PORTAL & GOLD FOIL REVELATION -->
+  <!-- ============================================================ -->
+  <section id="hero" class="hero-canvas-section">
+    <!-- Atmospheric Architectural Background Layer -->
+    <div class="hero-bg-portal-art" style="background-image: url('/assets/arch_portal.jpg');" aria-hidden="true"></div>
+    <div class="hero-scrim-gradient" aria-hidden="true"></div>
+    <div class="sacred-girih-watermark" aria-hidden="true"></div>
+
+    <div class="hero-stage-container">
+      
+      <!-- Architectural Moorish Arch Portal Monolith with 3D Tilt -->
+      <div class="moorish-arch-portal" id="hero-portal-card">
+        
+        <!-- Intricate Apex Keystone Filigree Motif -->
+        <div class="portal-keystone-ornament">
+          <svg viewBox="0 0 100 34" width="96" height="32" class="keystone-svg" aria-hidden="true">
+            <path d="M50 2 C40 12 26 22 2 30 C26 27 40 22 50 10 C60 22 74 27 98 30 C74 22 60 12 50 2 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <polygon points="50,2 54,10 46,10" fill="currentColor"/>
+            <circle cx="50" cy="18" r="3" fill="currentColor"/>
+            <circle cx="34" cy="24" r="1.5" fill="currentColor"/>
+            <circle cx="66" cy="24" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <div class="arch-portal-glass">
+          
+          <!-- Vector Bismillah Calligraphic Crest -->
+          <div class="bismillah-calligraphic-crest">
+            <span class="flourish-arm left"></span>
+            <div class="arabic-bismillah-script" lang="ar" dir="rtl">
+              بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+            </div>
+            <span class="flourish-arm right"></span>
+          </div>
+
+          <p class="hero-editorial-preface">
+            Together with their families, request the honour of your esteemed presence and heartfelt blessings at the auspicious Nikkah ceremony of
+          </p>
+
+          <!-- Core Typographic Names with Gold Foil Shimmer -->
+          <div class="hero-editorial-names">
+            <h1 class="couple-name groom gold-foil-text">Abdhul Raheem</h1>
+            <div class="couple-ampersand-crest">
+              <span class="crest-line"></span>
+              <div class="amp-medallion">
+                <span class="amp-glyph">&amp;</span>
+              </div>
+              <span class="crest-line"></span>
+            </div>
+            <h1 class="couple-name bride gold-foil-text">Shadab Fatima</h1>
+          </div>
+
+          <!-- Date & Timing Callout Badge -->
+          <div class="hero-callout-capsule">
+            <span class="capsule-gem">✦</span>
+            <span class="capsule-date">Sunday, 29th November 2026</span>
+            <span class="capsule-dot">•</span>
+            <span class="capsule-time">7:00 PM Onwards</span>
+            <span class="capsule-gem">✦</span>
+          </div>
+
+          <p class="hero-venue-announcement">
+            GRAND WEDDING HALL · BENGALURU
+          </p>
+
+          <!-- Action Triggers -->
+          <div class="hero-action-buttons">
+            <a href="#schedule" class="btn btn-gold-foil btn-hero" aria-label="Explore the celebration schedule">
+              <span>EXPLORE CEREMONY</span>
+              <span class="btn-arrow">↓</span>
+            </a>
+            <a href="#venue" class="btn btn-glass-outline btn-hero" aria-label="View venue location and directions">
+              <span>VENUE &amp; SANCTUARY</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Architectural Fine Line Divider with Floating Star Glyph -->
+    <div class="architectural-divider" aria-hidden="true">
+      <span class="div-line"></span>
+      <span class="div-knot">✦</span>
+      <span class="div-line"></span>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 3. SECTION: THE SACRED COVENANT & LINEAGE -->
+  <!-- ============================================================ -->
+  <section id="story" class="luxury-section covenant-section" aria-labelledby="covenant-title">
+    <div class="editorial-container">
+      
+      <div class="section-header-block text-center">
+        <span class="section-eyebrow">THE SACRED COVENANT</span>
+        <h2 id="covenant-title" class="section-title gold-foil-text">Two Souls, One Divine Decree</h2>
+        <div class="header-flourish"></div>
+      </div>
+
+      <!-- Quranic Ar-Rum Monument Card -->
+      <div class="covenant-parchment-monolith">
+        <div class="parchment-corner top-left"></div>
+        <div class="parchment-corner top-right"></div>
+        <div class="parchment-corner bottom-left"></div>
+        <div class="parchment-corner bottom-right"></div>
+
+        <!-- Amiri Arabic Calligraphy -->
+        <blockquote class="quranic-passage">
+          <div class="arabic-surah-verse" lang="ar" dir="rtl">
+            وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+          </div>
+          
+          <div class="covenant-center-gem">✦</div>
+
+          <p class="english-translation-text">
+            &ldquo;And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought.&rdquo;
+          </p>
+          
+          <cite class="verse-citation">&mdash; SURAH AR-RUM [30:21] &mdash;</cite>
+        </blockquote>
+      </div>
+
+      <!-- Editorial Narrative and Lineage Pedigree -->
+      <div class="covenant-pedigree-grid">
+        
+        <!-- House of the Groom -->
+        <div class="pedigree-card">
+          <div class="pedigree-header">
+            <span class="pedigree-label">HOUSE OF THE GROOM</span>
+            <div class="pedigree-monogram">AR</div>
+          </div>
+          <h3 class="pedigree-name">Abdhul Raheem</h3>
+          <p class="pedigree-desc">
+            Blessed with grace, devotion, and steadfast honour, stepping into this sacred union with gratitude to Allah and reverent joy for the road ahead.
+          </p>
+          <div class="pedigree-blessing">
+            <span class="p-knot">✦</span>
+            <span>May this covenant be crowned with barakah, tranquility, and boundless noor.</span>
+          </div>
+        </div>
+
+        <!-- Union Medallion Centerpiece -->
+        <div class="pedigree-medallion-pillar">
+          <div class="pedigree-wax-seal">
+            <img src="/assets/wax_seal.jpg" alt="Sacred Union Seal" class="medallion-seal-img" />
+          </div>
+          <span class="union-date-tag">29.11.2026</span>
+          <span class="union-sub-tag">QUBOOL HAI</span>
+        </div>
+
+        <!-- House of the Bride -->
+        <div class="pedigree-card">
+          <div class="pedigree-header">
+            <span class="pedigree-label">HOUSE OF THE BRIDE</span>
+            <div class="pedigree-monogram">SF</div>
+          </div>
+          <h3 class="pedigree-name">Shadab Fatima</h3>
+          <p class="pedigree-desc">
+            Radiant with warmth, noble heritage, and sincere piety, entering this blessed milestone surrounded by the cherished prayers and love of family.
+          </p>
+          <div class="pedigree-blessing">
+            <span class="p-knot">✦</span>
+            <span>May Allah envelop their union in eternal mercy, understanding, and joy.</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 4. SECTION: THE CEREMONY & TIMELINE -->
+  <!-- ============================================================ -->
+  <section id="schedule" class="luxury-section schedule-section" aria-labelledby="schedule-title">
+    <div class="editorial-container">
+      
+      <div class="section-header-block text-center">
+        <span class="section-eyebrow">CHRONICLE OF CELEBRATION</span>
+        <h2 id="schedule-title" class="section-title gold-foil-text">The Auspicious Schedule</h2>
+        <p class="section-subtitle">Sunday, the Twenty-Ninth of November, Two Thousand Twenty-Six</p>
+        <div class="header-flourish"></div>
+      </div>
+
+      <!-- Live Metallic Countdown Vault -->
+      <div class="countdown-vault-card" aria-label="Countdown until ceremony">
+        <div class="vault-inner-glow"></div>
+        <div class="vault-badge">TIME REMAINING UNTIL SACRED VOWS</div>
+        
+        <div class="countdown-units-grid">
+          <div class="countdown-unit">
+            <span class="unit-numeral" id="cd-days">00</span>
+            <span class="unit-caption">DAYS</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit">
+            <span class="unit-numeral" id="cd-hours">00</span>
+            <span class="unit-caption">HOURS</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit">
+            <span class="unit-numeral" id="cd-minutes">00</span>
+            <span class="unit-caption">MINUTES</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit">
+            <span class="unit-numeral" id="cd-seconds">00</span>
+            <span class="unit-caption">SECONDS</span>
+          </div>
+        </div>
+
+        <div class="vault-status-indicator">
+          <span class="pulse-dot"></span>
+          <span>CEREMONY COMMENCES AT 7:00 PM IST SHARP</span>
+        </div>
+      </div>
+
+      <!-- Vertical Chronological Timeline -->
+      <div class="ceremonial-timeline">
+        <div class="timeline-spine-line" aria-hidden="true"></div>
+
+        <!-- 07:00 PM - Welcome -->
+        <div class="timeline-event-card">
+          <div class="timeline-time-col">
+            <span class="event-time">07:00 PM</span>
+            <span class="event-arabic-tag">ISTIQBAAL</span>
+          </div>
+          <div class="timeline-node-dot">
+            <span class="node-inner">✦</span>
+          </div>
+          <div class="timeline-content-card">
+            <span class="event-step-num">STAGE 01</span>
+            <h3 class="event-heading">Arrival of Honoured Guests &amp; Welcome</h3>
+            <p class="event-desc">
+              Welcoming distinguished relatives, respected elders, and cherished companions with traditional floral hospitality, rosewater essence, and artisanal refreshing drinks.
+            </p>
+          </div>
+        </div>
+
+        <!-- 07:45 PM - Nikkah Rite -->
+        <div class="timeline-event-card highlight-event">
+          <div class="timeline-time-col">
+            <span class="event-time">07:45 PM</span>
+            <span class="event-arabic-tag">SACRED NIKKAH</span>
+          </div>
+          <div class="timeline-node-dot active-gold">
+            <span class="node-inner">✦</span>
+          </div>
+          <div class="timeline-content-card golden-card">
+            <span class="event-step-num highlight-badge">CENTRAL SACRED RITE</span>
+            <h3 class="event-heading">Solemnization of Nikkah &amp; Collective Dua</h3>
+            <p class="event-desc">
+              Recitation of the Holy Quran, the solemn Khutbah-e-Nikah, formal Ijab-o-Qubool (sacred vows), signing of the Nikkahnama contract, and collective prayers for lifelong barakah, companionship, and mercy.
+            </p>
+          </div>
+        </div>
+
+        <!-- 08:30 PM - Walima Banquet -->
+        <div class="timeline-event-card">
+          <div class="timeline-time-col">
+            <span class="event-time">08:30 PM</span>
+            <span class="event-arabic-tag">WALIMA BANQUET</span>
+          </div>
+          <div class="timeline-node-dot">
+            <span class="node-inner">✦</span>
+          </div>
+          <div class="timeline-content-card">
+            <span class="event-step-num">STAGE 03</span>
+            <h3 class="event-heading">Royal Feast &amp; Celebrations</h3>
+            <p class="event-desc">
+              A sumptuous royal banquet served in honour of our guests, followed by congratulations, intimate family blessings, and commemorative portraits.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Add to Calendar Synchronization -->
+      <div class="calendar-sync-bar">
+        <a id="btn-add-google-cal" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-calendar btn-gold-cal">
+          <span>ADD TO GOOGLE CALENDAR</span>
+          <span class="cal-icon">🗓️</span>
+        </a>
+        <button type="button" id="btn-export-ical" class="btn btn-calendar btn-ical-outline">
+          <span>APPLE / OUTLOOK ICAL (.ICS)</span>
+          <span class="cal-icon">📥</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5. SECTION: THE SANCTUARY (GRAND WEDDING HALL) -->
+  <!-- ============================================================ -->
+  <section id="venue" class="luxury-section sanctuary-section" aria-labelledby="venue-title">
+    <div class="editorial-container">
+      
+      <div class="section-header-block text-center">
+        <span class="section-eyebrow">THE SANCTUARY</span>
+        <h2 id="venue-title" class="section-title gold-foil-text">Grand Wedding Hall</h2>
+        <p class="section-subtitle">Sunday, 29th November 2026 · 7:00 PM Onwards</p>
+        <div class="header-flourish"></div>
+      </div>
+
+      <!-- Venue Visual Showcase Card -->
+      <div class="venue-monolith-card">
+        
+        <!-- Palace Architectural Render -->
+        <div class="venue-image-frame">
+          <img src="/assets/venue_palace.jpg" alt="Grand Wedding Hall illuminated at night" class="venue-palace-img" />
+          <div class="venue-image-overlay">
+            <span class="venue-badge-pill">OFFICIAL WEDDING VENUE</span>
+            <span class="venue-timing-pill">7:00 PM Onwards</span>
+          </div>
+        </div>
+
+        <!-- Venue Information & Navigation Content -->
+        <div class="venue-details-panel">
+          <div class="venue-header-row">
+            <div>
+              <span class="venue-tag">BENGALURU</span>
+              <h3 class="venue-place-name">Grand Wedding Hall</h3>
+            </div>
+            <div class="venue-star-knot">✦</div>
+          </div>
+
+          <!-- Direct Event & Location Meta Strip -->
+          <div class="venue-meta-strip">
+            <div class="venue-meta-item">
+              <span class="meta-label">DATE &amp; TIMING</span>
+              <span class="meta-val">Sunday, 29th November 2026 · 7:00 PM Onwards</span>
+            </div>
+            <div class="venue-meta-item">
+              <span class="meta-label">VENUE LOCATION</span>
+              <span class="meta-val">Grand Wedding Hall, Bengaluru</span>
+            </div>
+          </div>
+
+          <!-- Actions: Navigation & Copy -->
+          <div class="venue-action-buttons">
+            <a href="https://maps.app.goo.gl/7CWHe2UekRWbMbiVA?g_st=aw" target="_blank" rel="noopener noreferrer" class="btn btn-gold-foil btn-venue-nav">
+              <span>OPEN IN GOOGLE MAPS</span>
+              <span class="btn-ext-icon">↗</span>
+            </a>
+
+            <button type="button" class="btn btn-glass-outline btn-copy-loc" id="btn-copy-address">
+              <span id="copy-btn-text">COPY VENUE ADDRESS</span>
+              <span class="copy-glyph">📋</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5. SECTION: BENEDICTIONS & DUAS WALL -->
+  <!-- ============================================================ -->
+  <section id="benedictions" class="luxury-section benedictions-section" aria-labelledby="benedictions-title">
+    <div class="editorial-container">
+      
+      <div class="section-header-block text-center">
+        <span class="section-eyebrow">DIVINE BLESSINGS</span>
+        <h2 id="benedictions-title" class="section-title gold-foil-text">Shower of Mubarak &amp; Duas</h2>
+        <p class="section-subtitle">Tap a sacred prayer chip to bestow your blessings upon the bride and groom</p>
+        <div class="header-flourish"></div>
+      </div>
+
+      <!-- Quick Interactive Dua Blessing Chips -->
+      <div class="interactive-dua-chips" role="group" aria-label="Quick Duas">
+        <button type="button" class="dua-chip-btn" data-dua="Barakallahu Lakuma wa Baraka Alaikuma">
+          <span class="chip-gem">✦</span>
+          <span>Barakallahu Lakuma (May Allah Bless You)</span>
+        </button>
+
+        <button type="button" class="dua-chip-btn" data-dua="May your home overflow with tranquility and infinite noor">
+          <span class="chip-gem">✦</span>
+          <span>Peace &amp; Infinite Noor</span>
+        </button>
+
+        <button type="button" class="dua-chip-btn" data-dua="Wishing you endless harmony, mercy, and cherished laughter">
+          <span class="chip-gem">✦</span>
+          <span>Endless Harmony &amp; Mercy</span>
+        </button>
+
+        <button type="button" class="dua-chip-btn" data-dua="May your union be blessed in this life and the hereafter">
+          <span class="chip-gem">✦</span>
+          <span>Jannah Companionship</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 8. EDITORIAL FOOTER -->
+  <!-- ============================================================ -->
+  <footer class="luxury-footer">
+    <div class="editorial-container">
+      
+      <div class="footer-crest-wrapper">
+        <span class="footer-monogram">A &amp; S</span>
+        <span class="footer-knot">✦ ✦ ✦</span>
+        <h4 class="footer-names">Abdhul Raheem &amp; Shadab Fatima</h4>
+        <p class="footer-blessing">
+          May the peace, mercy, and blessings of Allah be upon you all.
+        </p>
+      </div>
+
+      <div class="footer-nav-strip">
+        <a href="#hero">The Portal</a>
+        <span class="f-dot">•</span>
+        <a href="#story">Covenant</a>
+        <span class="f-dot">•</span>
+        <a href="#schedule">Ceremony</a>
+        <span class="f-dot">•</span>
+        <a href="#venue">Sanctuary</a>
+        <span class="f-dot">•</span>
+        <a href="#benedictions">Duas &amp; Mubarak</a>
+      </div>
+
+      <div class="footer-copyright-strip">
+        <p class="copyright-line">&copy; 2026 Abdhul Raheem &amp; Shadab Fatima. All rights reserved.</p>
+        <p class="sub-credit">Bespoke Digital Invitation · Designed for Eternity</p>
+      </div>
+
+    </div>
+  </footer>
 
   <script type="module" src="/src/main.js"></script>
 </body>

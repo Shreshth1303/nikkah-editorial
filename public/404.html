@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>404 — Page Departed | Abdhul Raheem &amp; Shadab Fatima</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --alabaster: #F9F8F5;
+      --obsidian: #0C1017;
+      --charcoal: #1F2421;
+      --brass: #C5A880;
+      --ochre: #A88858;
+      --brass-gradient: linear-gradient(135deg, #c5a880 0%, #a88858 100%);
+      --hairline: rgba(197, 168, 128, 0.25);
+      --ff-display: 'Cinzel Decorative', serif;
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      font-family: var(--ff-sans);
+      background-color: var(--obsidian);
+      background-image: 
+        radial-gradient(ellipse at 50% 15%, rgba(197, 168, 128, 0.08) 0%, transparent 65%),
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='none' stroke='%23C5A880' stroke-width='0.4' stroke-opacity='0.06'/%3E%3C/svg%3E");
+      color: #EDE8DF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .brand-crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: rgba(197, 168, 128, 0.08);
+      border: 1px solid var(--hairline);
+      color: var(--brass);
+      font-family: var(--ff-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .brand-crest:hover {
+      background: rgba(197, 168, 128, 0.18);
+      border-color: var(--brass);
+      transform: translateY(-2px);
+    }
+
+    /* Architectural Arch Frame */
+    .arch-monolith {
+      max-width: 580px;
+      margin: auto;
+      padding: 50px 32px;
+      background: rgba(12, 16, 23, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--hairline);
+      border-radius: 180px 180px 16px 16px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(197, 168, 128, 0.2);
+      position: relative;
+    }
+
+    .arch-keystone {
+      margin-bottom: 20px;
+    }
+
+    .arch-number {
+      font-family: var(--ff-serif);
+      font-size: clamp(52px, 12vw, 84px);
+      font-weight: 300;
+      color: transparent;
+      background: var(--brass-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .arch-headline {
+      font-family: var(--ff-serif);
+      font-size: clamp(22px, 5vw, 30px);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #EDE8DF;
+      margin-bottom: 16px;
+    }
+
+    .arch-message {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: #A9B2BA;
+      font-weight: 300;
+      margin-bottom: 36px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 34px;
+      border-radius: 999px;
+      background: var(--brass-gradient);
+      color: #0C1017;
+      font-family: var(--ff-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(197, 168, 128, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .btn-return:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(197, 168, 128, 0.4);
+      background: linear-gradient(135deg, #dfc6a3 0%, #c5a880 100%);
+    }
+
+    .footer-line {
+      font-size: 0.82rem;
+      color: #6C7782;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <a href="/" class="brand-crest">
+      <span>A</span>
+      <span style="opacity:0.6;">&amp;</span>
+      <span>S</span>
+    </a>
+  </div>
+
+  <main class="arch-monolith">
+    <div class="arch-keystone">
+      <svg viewBox="0 0 60 22" width="50" height="18" fill="none" stroke="#C5A880" stroke-width="1.2">
+        <path d="M30 2 C22 9 12 16 2 20 C14 18 22 15 30 7 C38 15 46 18 58 20 C48 16 38 9 30 2 Z"/>
+      </svg>
+    </div>
+
+    <div class="arch-number">404</div>
+    <h1 class="arch-headline">Page Departed</h1>
+    <p class="arch-message">
+      404 — The page you are looking for has departed for the celebration. We invite you to join us on the main invitation page of <strong>Abdhul Raheem &amp; Shadab Fatima</strong>.
+    </p>
+
+    <a href="/" class="btn-return">
+      <span>✦</span> Return to Invitation
+    </a>
+  </main>
+
+  <footer class="footer-line">
+    <p>© 2026 Abdhul Raheem &amp; Shadab Fatima. All rights reserved.</p>
+  </footer>
+</body>
+</html>

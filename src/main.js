@@ -1,1026 +1,605 @@
 import './style.css';
 import QRCode from 'qrcode';
-import { initFlowerEffect } from './flowers.js';
 
 /* ============================================================
-   CONFIGURATION
+   CORE EVENT METRICS & CONSTANTS
    ============================================================ */
 
-// Wedding date/time — 29 November 2026, After Maghrib ~6pm IST
-const WEDDING_DATE = new Date('2026-11-29T18:00:00+05:30');
+// Sunday, 29th November 2026 at 7:00 PM IST (UTC+05:30)
+const WEDDING_TIMESTAMP = new Date('2026-11-29T19:00:00+05:30');
+const VENUE_NAME = "Grand Wedding Hall";
+const VENUE_MAPS_URL = "https://maps.app.goo.gl/7CWHe2UekRWbMbiVA?g_st=aw";
+const VENUE_ADDRESS_TEXT = "Grand Wedding Hall, Bengaluru (Google Maps: https://maps.app.goo.gl/7CWHe2UekRWbMbiVA?g_st=aw)";
 
 /* ============================================================
-   COUNTDOWN
+   1. AMBIENT GOLD DUST CANVAS ENGINE
    ============================================================ */
 
-function getCountdownValues() {
-  const now = new Date();
-  const diff = WEDDING_DATE.getTime() - now.getTime();
+function initGoldDustCanvas() {
+  const canvas = document.getElementById('ambient-gold-canvas');
+  if (!canvas) return { burst: () => {} };
 
-  if (diff <= 0) {
-    return { days: 0, hours: 0, mins: 0, secs: 0, complete: true };
+  const ctx = canvas.getContext('2d');
+  let animationId = null;
+  let width = 0;
+  let height = 0;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  const particles = [];
+  const bursts = [];
+  const PARTICLE_COUNT = window.innerWidth < 768 ? 35 : 70;
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / (1000 * 60)) % 60);
-  const secs = Math.floor((diff / 1000) % 60);
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
 
-  return { days, hours, mins, secs, complete: false };
-}
-
-function pad(n) {
-  return String(n).padStart(2, '0');
-}
-
-function updateCountdowns() {
-  const { days, hours, mins, secs, complete } = getCountdownValues();
-
-  // Cover countdown
-  const coverDays = document.getElementById('cover-days');
-  const coverHours = document.getElementById('cover-hours');
-  const coverMins = document.getElementById('cover-mins');
-  const coverSecs = document.getElementById('cover-secs');
-
-  if (coverDays) {
-    coverDays.textContent = pad(days);
-    coverHours.textContent = pad(hours);
-    coverMins.textContent = pad(mins);
-    coverSecs.textContent = pad(secs);
-  }
-
-  // Main countdown
-  const mainDays = document.getElementById('main-days');
-  const mainHours = document.getElementById('main-hours');
-  const mainMins = document.getElementById('main-mins');
-  const mainSecs = document.getElementById('main-secs');
-  const mainCountdown = document.getElementById('main-countdown');
-  const countdownComplete = document.getElementById('countdown-complete');
-
-  if (mainDays) {
-    if (complete) {
-      mainCountdown.style.display = 'none';
-      countdownComplete.classList.remove('hidden');
-    } else {
-      mainDays.textContent = pad(days);
-      mainHours.textContent = pad(hours);
-      mainMins.textContent = pad(mins);
-      mainSecs.textContent = pad(secs);
-    }
-  }
-}
-
-// Start countdown
-updateCountdowns();
-setInterval(updateCountdowns, 1000);
-
-/* ============================================================
-   OPENING ANIMATION (Smooth & Elegant)
-   ============================================================ */
-
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const animItems = document.querySelectorAll('.anim-item');
-let animationComplete = false;
-let animationFast = false;
-
-function runOpeningAnimation() {
-  if (reducedMotion) {
-    animItems.forEach(item => item.classList.add('visible'));
-    animationComplete = true;
-    return;
-  }
-
-  animItems.forEach(item => {
-    const delay = parseFloat(item.dataset.delay) || 0;
-    const effectiveDelay = animationFast ? Math.min(delay * 200, 600) : delay * 1000;
-
-    setTimeout(() => {
-      item.classList.add('visible');
-    }, effectiveDelay);
-  });
-
-  const maxDelay = animationFast ? 900 : 3400;
-  setTimeout(() => {
-    animationComplete = true;
-  }, maxDelay);
-}
-
-// Allow tapping anywhere on cover to accelerate reveal
-document.addEventListener('click', () => {
-  if (!animationComplete && !animationFast) {
-    animationFast = true;
-    animItems.forEach(item => {
-      item.style.transitionDuration = '0.35s';
-      item.classList.add('visible');
-    });
-    setTimeout(() => {
-      animationComplete = true;
-    }, 400);
-  }
-}, { once: false });
-
-window.addEventListener('load', () => {
-  requestAnimationFrame(() => {
-    runOpeningAnimation();
-  });
-});
-
-if (document.readyState === 'complete') {
-  requestAnimationFrame(() => {
-    runOpeningAnimation();
-  });
-}
-
-/* ============================================================
-   OPEN INVITATION TRANSITION
-   ============================================================ */
-
-const coverScreen = document.getElementById('cover-screen');
-const mainInvitation = document.getElementById('main-invitation');
-const openBtn = document.getElementById('open-invitation-btn');
-const navFab = document.getElementById('nav-fab');
-
-// Start dynamic flower petals effect on the entry page
-const flowerEffect = initFlowerEffect();
-
-if (openBtn) {
-  openBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-
-    // Celebratory petal burst from button position
-    const rect = openBtn.getBoundingClientRect();
-    const originX = rect.left + rect.width / 2;
-    const originY = rect.top + rect.height / 2;
-    if (flowerEffect && flowerEffect.burst) {
-      flowerEffect.burst(originX, originY, 45);
+  class Particle {
+    constructor() {
+      this.reset(true);
     }
 
-    // Ensure music is active on user opening interaction
-    playBGM();
+    reset(initial = false) {
+      this.x = Math.random() * width;
+      this.y = initial ? Math.random() * height : height + 10;
+      this.size = Math.random() * 2.2 + 0.6;
+      this.speedY = Math.random() * 0.4 + 0.15;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.55 + 0.25;
+      this.pulseSpeed = Math.random() * 0.02 + 0.008;
+      this.pulseVal = Math.random() * Math.PI;
+      const hue = Math.random() > 0.4 ? 40 : 45;
+      this.color = `hsl(${hue}, 50%, ${Math.random() * 20 + 70}%)`;
+    }
 
-    // Start split animation
-    coverScreen.classList.add('splitting');
+    update() {
+      this.y -= this.speedY;
+      this.x += this.speedX;
+      this.pulseVal += this.pulseSpeed;
+      this.currentOpacity = this.opacity * (0.6 + 0.4 * Math.sin(this.pulseVal));
 
-    // Show main invitation
-    setTimeout(() => {
-      mainInvitation.classList.add('visible');
-      mainInvitation.setAttribute('aria-hidden', 'false');
-    }, 350);
-
-    // Remove cover and gracefully clean up flower canvas
-    setTimeout(() => {
-      coverScreen.classList.add('hidden');
-      coverScreen.style.display = 'none';
-      if (flowerEffect && flowerEffect.stop) {
-        flowerEffect.stop();
+      if (this.y < -10 || this.x < -20 || this.x > width + 20) {
+        this.reset();
       }
-      // Show nav FAB
-      if (navFab) navFab.classList.remove('hidden');
-      // Initialize scroll reveals
-      initScrollReveal();
-    }, 1400);
-  });
-}
+    }
 
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
-
-function initScrollReveal() {
-  if (reducedMotion) {
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-      el.classList.add('revealed');
-    });
-    return;
+    draw() {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.currentOpacity;
+      ctx.shadowBlur = this.size * 3;
+      ctx.shadowColor = 'rgba(212, 175, 55, 0.45)';
+      ctx.fill();
+      ctx.restore();
+    }
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
+  function createBurst(x, y, count = 55) {
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 8 + 2;
+      bursts.push({
+        x: x || width / 2,
+        y: y || height / 2,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() * 3.5 + 1.2,
+        alpha: 1,
+        decay: Math.random() * 0.02 + 0.012,
+        color: Math.random() > 0.3 ? '#FFF2DF' : '#C5A880'
+      });
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push(new Particle());
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+
+    for (let i = bursts.length - 1; i >= 0; i--) {
+      const b = bursts[i];
+      b.x += b.vx;
+      b.y += b.vy;
+      b.vy += 0.08;
+      b.alpha -= b.decay;
+
+      if (b.alpha <= 0) {
+        bursts.splice(i, 1);
+      } else {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
+        ctx.fillStyle = b.color;
+        ctx.globalAlpha = b.alpha;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = 'rgba(255, 242, 223, 0.8)';
+        ctx.fill();
+        ctx.restore();
       }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
+    }
 
-  document.querySelectorAll('.scroll-reveal').forEach(el => {
-    observer.observe(el);
-  });
-}
+    animationId = requestAnimationFrame(loop);
+  }
 
-/* ============================================================
-   BOTTOM SHEET NAVIGATION
-   ============================================================ */
+  loop();
 
-const bottomSheet = document.getElementById('bottom-sheet');
-const backdrop = document.getElementById('bottom-sheet-backdrop');
-const navLinks = document.querySelectorAll('[data-nav]');
-
-function openSheet() {
-  if (!backdrop || !bottomSheet) return;
-  backdrop.classList.remove('hidden');
-  bottomSheet.classList.remove('hidden');
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      backdrop.classList.add('visible');
-      bottomSheet.classList.add('visible');
-    });
-  });
-}
-
-function closeSheet() {
-  if (!backdrop || !bottomSheet) return;
-  backdrop.classList.remove('visible');
-  bottomSheet.classList.remove('visible');
-
-  setTimeout(() => {
-    backdrop.classList.add('hidden');
-  }, 400);
-}
-
-if (navFab) {
-  navFab.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openSheet();
-  });
-}
-
-if (backdrop) {
-  backdrop.addEventListener('click', closeSheet);
-}
-
-navLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    closeSheet();
-  });
-});
-
-/* ============================================================
-   QR CODE GENERATION
-   ============================================================ */
-
-async function generateQRCodes() {
-  const nikahUrl = "https://www.google.com/maps/search/Beary's+Amity+Bengaluru";
-  const receptionUrl = "https://www.google.com/maps/search/Silvercloud+Private+Resort+Wedding+Banquet+Hall+Chalalakkal+Parappur+Kerala";
-
-  const qrOptions = {
-    width: 150,
-    margin: 1,
-    color: {
-      dark: '#172033',
-      light: '#FFFFFF'
-    },
-    errorCorrectionLevel: 'M'
+  return {
+    burst: createBurst,
+    stop: () => cancelAnimationFrame(animationId)
   };
-
-  try {
-    const nikahCanvas = document.getElementById('qr-nikah');
-    if (nikahCanvas) {
-      await QRCode.toCanvas(nikahCanvas, nikahUrl, qrOptions);
-      nikahCanvas.style.width = '';
-      nikahCanvas.style.height = '';
-    }
-
-    const receptionCanvas = document.getElementById('qr-reception');
-    if (receptionCanvas) {
-      await QRCode.toCanvas(receptionCanvas, receptionUrl, qrOptions);
-      receptionCanvas.style.width = '';
-      receptionCanvas.style.height = '';
-    }
-  } catch (err) {
-    console.error('QR Code generation error:', err);
-  }
 }
 
-generateQRCodes();
+const goldCanvasEngine = initGoldDustCanvas();
 
 /* ============================================================
-   SHARE BUTTON
+   2. ROYAL CEREMONIAL ENVELOPE CONTROLLER
    ============================================================ */
 
-const shareBtn = document.getElementById('share-btn');
-const shareCopied = document.getElementById('share-copied');
+function initEnvelopeController() {
+  const envelopeScreen = document.getElementById('envelope-screen');
+  const waxSealBtn = document.getElementById('wax-seal-trigger');
+  const replayBtn = document.getElementById('replay-envelope-btn');
 
-if (shareBtn) {
-  shareBtn.addEventListener('click', async () => {
-    const shareData = {
-      title: 'Abdhul Raheem & Shadab Fatima | Nikah Invitation',
-      text: "You're cordially invited to celebrate the Nikah of Abdhul Raheem & Shadab Fatima.",
-      url: window.location.href
+  if (!envelopeScreen || !waxSealBtn) return;
+
+  function openEnvelope() {
+    envelopeScreen.classList.add('opened');
+    
+    // Play sound & burst particles
+    audioSynth.playChime();
+    const rect = waxSealBtn.getBoundingClientRect();
+    goldCanvasEngine.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 60);
+
+    setTimeout(() => {
+      envelopeScreen.classList.add('hidden');
+    }, 900);
+  }
+
+  function closeAndReplay() {
+    envelopeScreen.classList.remove('hidden');
+    envelopeScreen.classList.remove('opened');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  waxSealBtn.addEventListener('click', openEnvelope);
+  if (replayBtn) replayBtn.addEventListener('click', closeAndReplay);
+}
+
+/* ============================================================
+   3. WEB AUDIO SERENITY SYNTHESIZER (HARP / CELESTA AMBIENCE)
+   ============================================================ */
+
+class AmbientSerenitySynth {
+  constructor() {
+    this.ctx = null;
+    this.isPlaying = false;
+    this.timerId = null;
+    this.gainNode = null;
+    // Pentatonic royal chord notes in Hz (D4, E4, F#4, A4, B4, D5, E5, F#5, A5)
+    this.scale = [293.66, 329.63, 369.99, 440.00, 493.88, 587.33, 659.25, 739.99, 880.00];
+  }
+
+  initContext() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+        this.gainNode = this.ctx.createGain();
+        this.gainNode.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        this.gainNode.connect(this.ctx.destination);
+      }
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  playNote(freq, timeOffset = 0, duration = 3.5) {
+    if (!this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const noteGain = this.ctx.createGain();
+
+    // Warm sine + subtle triangle for delicate acoustic harp feel
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + timeOffset);
+
+    const startTime = this.ctx.currentTime + timeOffset;
+    noteGain.gain.setValueAtTime(0, startTime);
+    noteGain.gain.linearRampToValueAtTime(0.18, startTime + 0.08);
+    noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+    osc.connect(noteGain);
+    noteGain.connect(this.gainNode);
+
+    osc.start(startTime);
+    osc.stop(startTime + duration + 0.1);
+  }
+
+  playChime() {
+    this.initContext();
+    if (!this.ctx) return;
+    // Pleasant 3-note arpeggio chime for seal break
+    [this.scale[3], this.scale[5], this.scale[8]].forEach((freq, idx) => {
+      this.playNote(freq, idx * 0.12, 2.5);
+    });
+  }
+
+  start() {
+    this.initContext();
+    if (!this.ctx) return;
+    this.isPlaying = true;
+
+    const playArpeggio = () => {
+      if (!this.isPlaying) return;
+      // Pick 3-4 gentle harmonious notes from scale
+      const chord = [
+        this.scale[Math.floor(Math.random() * 3)],
+        this.scale[3 + Math.floor(Math.random() * 3)],
+        this.scale[6 + Math.floor(Math.random() * 3)]
+      ];
+
+      chord.forEach((note, idx) => {
+        this.playNote(note, idx * 0.45, 4.0);
+      });
+
+      const nextInterval = 4500 + Math.random() * 2500;
+      this.timerId = setTimeout(playArpeggio, nextInterval);
     };
 
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          fallbackCopy();
-        }
-      }
+    playArpeggio();
+  }
+
+  stop() {
+    this.isPlaying = false;
+    if (this.timerId) clearTimeout(this.timerId);
+  }
+
+  toggle() {
+    if (this.isPlaying) {
+      this.stop();
+      return false;
     } else {
-      fallbackCopy();
+      this.start();
+      return true;
     }
-  });
+  }
 }
 
-function fallbackCopy() {
-  navigator.clipboard.writeText(window.location.href).then(() => {
-    if (!shareCopied) return;
-    shareCopied.classList.remove('hidden');
-    shareCopied.classList.add('show');
-    setTimeout(() => {
-      shareCopied.classList.remove('show');
-    }, 2500);
-  }).catch(() => {
-    const textArea = document.createElement('textarea');
-    textArea.value = window.location.href;
-    textArea.style.position = 'fixed';
-    textArea.style.opacity = '0';
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
+const audioSynth = new AmbientSerenitySynth();
 
-    if (shareCopied) {
-      shareCopied.classList.remove('hidden');
-      shareCopied.classList.add('show');
-      setTimeout(() => {
-        shareCopied.classList.remove('show');
-      }, 2500);
+function initAudioController() {
+  const audioBtn = document.getElementById('audio-toggle-btn');
+  if (!audioBtn) return;
+
+  audioBtn.addEventListener('click', () => {
+    const isPlaying = audioSynth.toggle();
+    if (isPlaying) {
+      audioBtn.classList.add('playing');
+      showToast("Ambient Serenity Accompaniment Enabled");
+    } else {
+      audioBtn.classList.remove('playing');
+      showToast("Ambient Audio Paused");
     }
   });
 }
 
 /* ============================================================
-   MUSIC TOGGLE & INSTANT AUTOPLAY SYSTEM
+   4. TOAST NOTIFICATION CAPSULE
    ============================================================ */
 
-const musicFab = document.getElementById('music-fab');
-const bgMusic = document.getElementById('bg-music');
-const musicToast = document.getElementById('music-toast');
-let isPlaying = false;
 let toastTimeout = null;
+function showToast(message) {
+  const toast = document.getElementById('luxury-toast');
+  const msgEl = document.getElementById('toast-message');
+  if (!toast || !msgEl) return;
 
-function showMusicToast(msg) {
-  if (!musicToast) return;
-  musicToast.textContent = msg;
-  musicToast.classList.remove('hidden');
-  clearTimeout(toastTimeout);
+  msgEl.textContent = message;
+  toast.classList.add('active');
+  toast.setAttribute('aria-hidden', 'false');
+
+  if (toastTimeout) clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => {
-    musicToast.classList.add('hidden');
+    toast.classList.remove('active');
+    toast.setAttribute('aria-hidden', 'true');
   }, 3200);
 }
 
-function updateMusicUI(playing) {
-  if (!musicFab) return;
-  if (playing) {
-    musicFab.classList.add('playing');
-    musicFab.classList.remove('paused');
-    musicFab.setAttribute('aria-label', 'Pause background music');
-    musicFab.setAttribute('title', 'Pause background music');
-  } else {
-    musicFab.classList.remove('playing');
-    musicFab.classList.add('paused');
-    musicFab.setAttribute('aria-label', 'Play background music');
-    musicFab.setAttribute('title', 'Play background music');
+/* ============================================================
+   5. REAL-TIME COUNTDOWN VAULT (Sunday, 29th Nov 2026, 7:00 PM IST)
+   ============================================================ */
+
+function initCountdownVault() {
+  const elDays = document.getElementById('cd-days');
+  const elHours = document.getElementById('cd-hours');
+  const elMinutes = document.getElementById('cd-minutes');
+  const elSeconds = document.getElementById('cd-seconds');
+
+  if (!elDays || !elHours || !elMinutes || !elSeconds) return;
+
+  function update() {
+    const now = new Date().getTime();
+    const diff = WEDDING_TIMESTAMP.getTime() - now;
+
+    if (diff <= 0) {
+      elDays.textContent = '00';
+      elHours.textContent = '00';
+      elMinutes.textContent = '00';
+      elSeconds.textContent = '00';
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    elDays.textContent = String(days).padStart(2, '0');
+    elHours.textContent = String(hours).padStart(2, '0');
+    elMinutes.textContent = String(minutes).padStart(2, '0');
+    elSeconds.textContent = String(seconds).padStart(2, '0');
   }
-}
 
-function fadeAudio(audio, targetVolume, duration = 1200, onComplete) {
-  const steps = 24;
-  const stepTime = duration / steps;
-  const startVolume = audio.volume;
-  const volumeStep = (targetVolume - startVolume) / steps;
-  let currentStep = 0;
-
-  const interval = setInterval(() => {
-    currentStep++;
-    audio.volume = Math.min(1, Math.max(0, audio.volume + volumeStep));
-    if (currentStep >= steps) {
-      audio.volume = targetVolume;
-      clearInterval(interval);
-      if (onComplete) onComplete();
-    }
-  }, stepTime);
-}
-
-function playBGM() {
-  if (!bgMusic || isPlaying) return;
-  bgMusic.loop = true;
-  bgMusic.volume = 0.05;
-
-  const playPromise = bgMusic.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      isPlaying = true;
-      updateMusicUI(true);
-      fadeAudio(bgMusic, 0.55, 1400);
-      showMusicToast("♫ Can't Help Falling in Love • Tap to pause");
-    }).catch((err) => {
-      console.log('Autoplay deferred by browser policy, awaiting first interaction:', err);
-      isPlaying = false;
-      updateMusicUI(false);
-      setupFirstInteractionListener();
-    });
-  }
-}
-
-function setupFirstInteractionListener() {
-  const events = ['pointerdown', 'touchstart', 'click', 'keydown', 'wheel', 'scroll'];
-  const handler = () => {
-    if (!isPlaying && bgMusic) {
-      bgMusic.volume = 0.05;
-      bgMusic.play().then(() => {
-        isPlaying = true;
-        updateMusicUI(true);
-        fadeAudio(bgMusic, 0.55, 1200);
-        showMusicToast("♫ Can't Help Falling in Love • Tap to pause");
-      }).catch(() => {});
-    }
-    events.forEach(evt => window.removeEventListener(evt, handler, { capture: true }));
-  };
-
-  events.forEach(evt => {
-    window.addEventListener(evt, handler, { capture: true, once: true });
-  });
-}
-
-// Start music immediately from the very beginning
-playBGM();
-
-// Also trigger on DOMContentLoaded & window load
-document.addEventListener('DOMContentLoaded', () => {
-  if (!isPlaying) playBGM();
-});
-window.addEventListener('load', () => {
-  if (!isPlaying) playBGM();
-});
-
-// Music Toggle Click Handler
-if (musicFab) {
-  musicFab.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (isPlaying) {
-      fadeAudio(bgMusic, 0, 400, () => {
-        bgMusic.pause();
-        isPlaying = false;
-        updateMusicUI(false);
-        showMusicToast('Music paused');
-      });
-    } else {
-      bgMusic.volume = 0.05;
-      bgMusic.play().then(() => {
-        isPlaying = true;
-        updateMusicUI(true);
-        fadeAudio(bgMusic, 0.55, 600);
-        showMusicToast("♫ Can't Help Falling in Love • Tap to pause");
-      }).catch((err) => {
-        console.log('Play failed:', err);
-      });
-    }
-  });
+  update();
+  setInterval(update, 1000);
 }
 
 /* ============================================================
-   DUAS & BLESSINGS (Interactive Guestbook)
+   6. CALENDAR SYNCHRONIZATION (GOOGLE & APPLE .ICS)
    ============================================================ */
 
-const DEFAULT_BLESSINGS = [
-  {
-    id: 'blessing-brother-rehmaan-sabaa',
-    name: "Rehmaan & Sabaa",
-    relation: "Elder Brother & Sister-in-law",
-    badgeClass: "brother-badge",
-    avatarClass: "brother-avatar",
-    initials: "RS",
-    text: "Barakallahu lakuma wa baraka alaikuma wa jama'a bainakuma fee khair! Heartiest congratulations and infinite love to my dearest brother Abdhul Raheem and dearest Shadab Fatima. May Allah bless your new journey together with boundless affection, peace, happiness, and eternal barakah. Ameen! 🤍✨",
-    time: "Elder Brother's Blessing",
-    likes: 38
-  },
-  {
-    id: 'blessing-groom-parents',
-    name: "Mr. Shafi Aboobacker & Mrs. Shamshad Shafi",
-    relation: "Parents' Blessing",
-    badgeClass: "family-badge",
-    avatarClass: "family-avatar",
-    initials: "SS",
-    text: "Barakallahu lakuma wa baraka alaikuma wa jama'a bainakuma fee khair! May Allah shower dearest Abdhul Raheem & Shadab Fatima with endless affection, peace, good health, and divine barakah.",
-    time: "Parents' Duas",
-    likes: 29
-  },
-  {
-    id: 'blessing-bride-family',
-    name: "Mr. Mohammad Shujathulla & Family",
-    relation: "Bride's Family",
-    badgeClass: "family-badge",
-    avatarClass: "family-avatar",
-    initials: "MS",
-    text: "May this sacred union be the beginning of a life filled with mutual trust, health, tranquility, and infinite bliss in this world and the Aakhirah. Ameen!",
-    time: "Family Blessing",
-    likes: 24
-  }
-];
+function initCalendarSync() {
+  const btnGoogle = document.getElementById('btn-add-google-cal');
+  const btnIcal = document.getElementById('btn-export-ical');
 
-function getInitials(name) {
-  if (!name) return '✦';
-  const clean = name.replace(/^(Mr\.|Mrs\.|Ms\.|Dr\.)\s*/i, '').trim();
-  const parts = clean.split(/[\s&+,/]+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  }
-  return clean.slice(0, 2).toUpperCase() || '✦';
-}
+  // Google Calendar parameters
+  // Event: 20261129T133000Z to 20261129T183000Z (7:00 PM IST is 13:30 UTC)
+  const gcalTitle = encodeURIComponent("Nikkah Ceremony — Abdhul Raheem & Shadab Fatima");
+  const gcalDetails = encodeURIComponent(
+    "Auspicious Ceremony of Nikkah of Abdhul Raheem & Shadab Fatima.\nTiming: 7:00 PM Onwards.\nSanctuary: Grand Wedding Hall.\nLocation: " + VENUE_MAPS_URL
+  );
+  const gcalLocation = encodeURIComponent(VENUE_NAME + " (Google Maps: " + VENUE_MAPS_URL + ")");
+  const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gcalTitle}&dates=20261129T133000Z/20261129T183000Z&details=${gcalDetails}&location=${gcalLocation}`;
 
-function initDuas() {
-  const duaForm = document.getElementById('dua-form');
-  const duaSender = document.getElementById('dua-sender');
-  const duaMessage = document.getElementById('dua-message');
-  const duaFeedback = document.getElementById('dua-feedback');
-  const quickChips = document.querySelectorAll('.dua-chip');
-  const track = document.getElementById('duas-carousel-track');
-  const dotsContainer = document.getElementById('duas-dots-container');
-  const prevBtn = document.getElementById('dua-prev-btn');
-  const nextBtn = document.getElementById('dua-next-btn');
-  const pageIndicator = document.getElementById('carousel-page-indicator');
-  const countText = document.getElementById('duas-count-text');
-
-  if (!track) return;
-
-  // Load stored blessings
-  let storedBlessings = [];
-  try {
-    const raw = localStorage.getItem('abdhul_shadab_duas_v2');
-    if (raw) {
-      storedBlessings = JSON.parse(raw);
-    } else {
-      const oldRaw = localStorage.getItem('abdhul_shadab_duas');
-      if (oldRaw) {
-        const oldList = JSON.parse(oldRaw);
-        storedBlessings = oldList.filter(item => typeof item.id === 'number' && item.id > 100);
-      }
-    }
-    // Prevent duplicate elder brother entries from earlier test inputs
-    storedBlessings = storedBlessings.filter(item => {
-      if (!item || !item.name) return false;
-      const n = item.name.toLowerCase();
-      return !n.includes('rehmaan') && !n.includes('raheem') && !n.includes('sabaa');
-    });
-  } catch (e) {
-    console.warn(e);
+  if (btnGoogle) {
+    btnGoogle.href = gcalUrl;
   }
 
-  // Load liked blessings map
-  let likedMap = {};
-  try {
-    const rawLikes = localStorage.getItem('abdhul_shadab_likes');
-    if (rawLikes) likedMap = JSON.parse(rawLikes);
-  } catch (e) {
-    console.warn(e);
-  }
-
-  const allBlessings = [...storedBlessings, ...DEFAULT_BLESSINGS];
-  let currentIndex = 0;
-
-  function renderCarousel(highlightFirst = false) {
-    const totalCount = allBlessings.length;
-
-    if (countText) {
-      countText.textContent = `${totalCount} Heartfelt ${totalCount === 1 ? 'Wish' : 'Wishes'}`;
-    }
-
-    track.innerHTML = allBlessings.map((dua, index) => {
-      const isLiked = !!likedMap[dua.id];
-      const displayLikes = (dua.likes || 0) + (isLiked ? 1 : 0);
-      const isJustAdded = highlightFirst && index === 0;
-
-      return `
-        <article class="dua-carousel-card ${isJustAdded ? 'just-added' : ''}" data-id="${dua.id}" data-index="${index}" aria-label="Blessing from ${escapeHTML(dua.name)}">
-          <div class="dua-card-header">
-            <div class="dua-sender-profile">
-              <div class="dua-avatar ${dua.avatarClass || ''}">${escapeHTML(dua.initials || getInitials(dua.name))}</div>
-              <div class="dua-sender-meta">
-                <h4 class="dua-card-sender">${escapeHTML(dua.name)}</h4>
-                <span class="dua-relation-badge ${dua.badgeClass || ''}">✦ ${escapeHTML(dua.relation || 'Guest Wish')}</span>
-              </div>
-            </div>
-            <span class="dua-card-time">${escapeHTML(dua.time || 'Warm Wish')}</span>
-          </div>
-
-          <div class="dua-card-quote-icon">“</div>
-          <p class="dua-card-body">${escapeHTML(dua.text)}</p>
-
-          <div class="dua-card-footer">
-            <button type="button" class="dua-like-btn ${isLiked ? 'liked' : ''}" data-id="${dua.id}" aria-label="Send Mubarak for this blessing">
-              <span class="heart-icon">${isLiked ? '❤️' : '🤍'}</span>
-              <span class="like-label">Mubarak</span>
-              <span class="like-count">${displayLikes}</span>
-            </button>
-          </div>
-        </article>
-      `;
-    }).join('');
-
-    renderDots();
-    attachLikeListeners();
-    updateNavUI();
-  }
-
-  function renderDots() {
-    if (!dotsContainer) return;
-    const total = allBlessings.length;
-    dotsContainer.innerHTML = Array.from({ length: total }, (_, i) => `
-      <button type="button" class="dua-dot ${i === currentIndex ? 'active' : ''}" data-index="${i}" aria-label="Go to wish ${i + 1}"></button>
-    `).join('');
-
-    dotsContainer.querySelectorAll('.dua-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        const targetIdx = parseInt(dot.getAttribute('data-index'), 10);
-        scrollToIndex(targetIdx);
-        restartAutoPlay();
-      });
-    });
-  }
-
-  function updateNavUI() {
-    const total = allBlessings.length;
-    if (pageIndicator) {
-      pageIndicator.textContent = `${currentIndex + 1} / ${total}`;
-    }
-    if (prevBtn) {
-      prevBtn.disabled = total <= 1;
-    }
-    if (nextBtn) {
-      nextBtn.disabled = total <= 1;
-    }
-    if (dotsContainer) {
-      dotsContainer.querySelectorAll('.dua-dot').forEach((dot, idx) => {
-        if (idx === currentIndex) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-    }
-  }
-
-  function scrollToIndex(index) {
-    const total = allBlessings.length;
-    if (total === 0) return;
-
-    // Loop continuously around
-    if (index < 0) {
-      index = total - 1;
-    } else if (index >= total) {
-      index = 0;
-    }
-    currentIndex = index;
-
-    const cards = track.querySelectorAll('.dua-carousel-card');
-    if (cards[index]) {
-      const card = cards[index];
-      const trackPadding = parseInt(window.getComputedStyle(track).paddingLeft, 10) || 0;
-      track.scrollTo({
-        left: card.offsetLeft - trackPadding,
-        behavior: 'smooth'
-      });
-    }
-    updateNavUI();
-  }
-
-  // Auto-play loop for blessings cards
-  let autoPlayTimer = null;
-  const AUTO_PLAY_INTERVAL = 4000; // Change every 4 seconds
-
-  function startAutoPlay() {
-    stopAutoPlay();
-    if (allBlessings.length <= 1) return;
-    autoPlayTimer = setInterval(() => {
-      scrollToIndex(currentIndex + 1);
-    }, AUTO_PLAY_INTERVAL);
-  }
-
-  function stopAutoPlay() {
-    if (autoPlayTimer) {
-      clearInterval(autoPlayTimer);
-      autoPlayTimer = null;
-    }
-  }
-
-  function restartAutoPlay() {
-    stopAutoPlay();
-    startAutoPlay();
-  }
-
-  // Pause on hover
-  track.addEventListener('mouseenter', stopAutoPlay);
-  track.addEventListener('mouseleave', startAutoPlay);
-
-  // Pause on touch interaction, resume after pause
-  track.addEventListener('touchstart', stopAutoPlay, { passive: true });
-  track.addEventListener('touchend', () => {
-    setTimeout(startAutoPlay, 3000);
-  }, { passive: true });
-
-  // Pause when browser tab/window is hidden
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAutoPlay();
-    else startAutoPlay();
-  });
-
-  // Scroll listener to sync indicator on mobile swipe
-  let scrollTimeout = null;
-  track.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      const cards = track.querySelectorAll('.dua-carousel-card');
-      if (!cards.length) return;
-      const scrollPos = track.scrollLeft + track.offsetWidth / 2;
-      let closestIdx = 0;
-      let minDiff = Infinity;
-
-      cards.forEach((c, idx) => {
-        const cardCenter = c.offsetLeft + c.offsetWidth / 2;
-        const diff = Math.abs(scrollPos - cardCenter);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestIdx = idx;
-        }
-      });
-
-      if (closestIdx !== currentIndex) {
-        currentIndex = closestIdx;
-        updateNavUI();
-      }
-    }, 60);
-  }, { passive: true });
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      scrollToIndex(currentIndex - 1);
-      restartAutoPlay();
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      scrollToIndex(currentIndex + 1);
-      restartAutoPlay();
-    });
-  }
-
-  function attachLikeListeners() {
-    track.querySelectorAll('.dua-like-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = btn.getAttribute('data-id');
-        const countSpan = btn.querySelector('.like-count');
-        const heartSpan = btn.querySelector('.heart-icon');
-        const wasLiked = btn.classList.contains('liked');
-        let currentLikes = parseInt(countSpan.textContent, 10) || 0;
-
-        if (!wasLiked) {
-          btn.classList.add('liked');
-          likedMap[id] = true;
-          countSpan.textContent = currentLikes + 1;
-          if (heartSpan) heartSpan.textContent = '❤️';
-        } else {
-          btn.classList.remove('liked');
-          delete likedMap[id];
-          countSpan.textContent = Math.max(1, currentLikes - 1);
-          if (heartSpan) heartSpan.textContent = '🤍';
-        }
-
-        try {
-          localStorage.setItem('abdhul_shadab_likes', JSON.stringify(likedMap));
-        } catch (err) {}
-      });
-    });
-  }
-
-  // Quick chips autofill
-  quickChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const text = chip.getAttribute('data-text');
-      if (duaMessage) {
-        duaMessage.value = text;
-        duaMessage.focus();
-      }
-    });
-  });
-
-  // Submit new wish
-  if (duaForm) {
-    duaForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const sender = duaSender.value.trim();
-      const message = duaMessage.value.trim();
-
-      if (!sender || !message) return;
-
-      const newDua = {
-        id: 'dua-' + Date.now(),
-        name: sender,
-        relation: "Guest Wish",
-        badgeClass: "guest-badge",
-        avatarClass: "",
-        initials: getInitials(sender),
-        text: message,
-        time: 'Just now',
-        likes: 1
-      };
-
-      allBlessings.unshift(newDua);
-      storedBlessings.unshift(newDua);
-
-      try {
-        localStorage.setItem('abdhul_shadab_duas_v2', JSON.stringify(storedBlessings));
-      } catch (err) {
-        console.warn(err);
-      }
-
-      currentIndex = 0;
-      renderCarousel(true);
-      scrollToIndex(0);
-      restartAutoPlay();
-
-      if (duaFeedback) {
-        duaFeedback.textContent = "✨ Alhamdulillah! Your heartfelt blessing has been added!";
-        duaFeedback.classList.remove('hidden');
-        setTimeout(() => {
-          duaFeedback.classList.add('hidden');
-        }, 4500);
-      }
-
-      // Celebratory flower petal burst from send button
-      const sendBtn = document.getElementById('btn-send-dua');
-      if (sendBtn && flowerEffect && flowerEffect.burst) {
-        const rect = sendBtn.getBoundingClientRect();
-        flowerEffect.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 35);
-      }
-
-      duaForm.reset();
-    });
-  }
-
-  renderCarousel();
-  startAutoPlay();
-}
-
-function escapeHTML(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-initDuas();
-
-/* ============================================================
-   CALENDAR & COPY ADDRESS
-   ============================================================ */
-
-function initCalendarAndCopy() {
-  const calModal = document.getElementById('calendar-modal');
-  const calBackdrop = document.getElementById('calendar-modal-backdrop');
-  const calClose = document.getElementById('cal-modal-close');
-  const calTitle = document.getElementById('cal-modal-title');
-  const calSub = document.getElementById('cal-modal-subtitle');
-  const calGoogleLink = document.getElementById('cal-google-link');
-  const calIcalBtn = document.getElementById('cal-ical-btn');
-
-  let currentCalEvent = null;
-
-  const EVENTS = {
-    nikah: {
-      title: "Nikah Ceremony of Abdhul Raheem & Shadab Fatima",
-      description: "Join us in celebrating the Nikah of Abdhul Raheem and Shadab Fatima after Namaz-e-Maghrib at Beary's Amity, Bengaluru.",
-      location: "Beary's Amity, Bengaluru",
-      start: "20261129T123000Z", // 6:00 PM IST = 12:30 UTC
-      end: "20261129T163000Z",
-      displayTitle: "Nikah Ceremony",
-      displaySub: "Sunday, 29 November 2026 • Beary's Amity, Bengaluru"
-    },
-    reception: {
-      title: "Grand Reception: Abdhul Raheem & Shadab Fatima",
-      description: "Wedding Banquet Hall Reception of Abdhul Raheem and Shadab Fatima at Silvercloud Private Resort, Chalalakkal, Parappur, Kerala.",
-      location: "Silvercloud Private Resort, Chalalakkal, Parappur, Kerala 680552",
-      start: "20261208T113000Z", // 5:00 PM IST = 11:30 UTC
-      end: "20261208T163000Z",
-      displayTitle: "Grand Reception",
-      displaySub: "Tuesday, 8 December 2026 • Silvercloud Resort, Kerala"
-    }
-  };
-
-  function openCalModal(eventKey) {
-    currentCalEvent = EVENTS[eventKey] || EVENTS.nikah;
-    if (calTitle) calTitle.textContent = currentCalEvent.displayTitle;
-    if (calSub) calSub.textContent = currentCalEvent.displaySub;
-
-    const gUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(currentCalEvent.title)}&dates=${currentCalEvent.start}/${currentCalEvent.end}&details=${encodeURIComponent(currentCalEvent.description)}&location=${encodeURIComponent(currentCalEvent.location)}`;
-    if (calGoogleLink) calGoogleLink.href = gUrl;
-
-    if (calBackdrop) calBackdrop.classList.remove('hidden');
-    if (calModal) calModal.classList.remove('hidden');
-  }
-
-  function closeCalModal() {
-    if (calBackdrop) calBackdrop.classList.add('hidden');
-    if (calModal) calModal.classList.add('hidden');
-  }
-
-  document.querySelectorAll('.btn-add-cal').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const eventKey = btn.getAttribute('data-event');
-      openCalModal(eventKey);
-    });
-  });
-
-  if (calClose) calClose.addEventListener('click', closeCalModal);
-  if (calBackdrop) calBackdrop.addEventListener('click', closeCalModal);
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeCalModal();
-  });
-
-  if (calIcalBtn) {
-    calIcalBtn.addEventListener('click', () => {
-      if (!currentCalEvent) return;
+  if (btnIcal) {
+    btnIcal.addEventListener('click', () => {
       const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Abdhul Raheem and Shadab Fatima Nikah//Wedding Invitation//EN',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        `SUMMARY:${currentCalEvent.title}`,
-        `DESCRIPTION:${currentCalEvent.description}`,
-        `LOCATION:${currentCalEvent.location}`,
-        `DTSTART:${currentCalEvent.start}`,
-        `DTEND:${currentCalEvent.end}`,
-        'STATUS:CONFIRMED',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Abdhul Raheem & Shadab Fatima//Nikkah Invitation//EN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        "UID:nikkah-abdhul-shadab-20261129@wedding.app",
+        "DTSTAMP:20261030T090000Z",
+        "DTSTART:20261129T133000Z",
+        "DTEND:20261129T183000Z",
+        "SUMMARY:Nikkah Ceremony — Abdhul Raheem & Shadab Fatima",
+        "DESCRIPTION:Auspicious Ceremony of Nikkah of Abdhul Raheem & Shadab Fatima at Grand Wedding Hall from 7:00 PM onwards. Google Maps: " + VENUE_MAPS_URL,
+        "LOCATION:Grand Wedding Hall\\, Bengaluru (Google Maps: " + VENUE_MAPS_URL + ")",
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
 
-      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `${currentCalEvent.title.replace(/[^a-zA-Z0-9]/g, '_')}.ics`);
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "Nikkah_Abdhul_Raheem_Shadab_Fatima.ics";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      closeCalModal();
+      showToast("Ceremony Added to Calendar File (.ics)");
     });
   }
+}
 
-  // Copy Address Buttons
-  document.querySelectorAll('.btn-copy-address').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const textToCopy = btn.getAttribute('data-copy');
-      if (!textToCopy) return;
+/* ============================================================
+   7. VENUE ADDRESS COPY TO CLIPBOARD
+   ============================================================ */
 
-      const originalHtml = btn.innerHTML;
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        btn.innerHTML = '✓ COPIED!';
-        btn.style.borderColor = 'var(--gold)';
-        btn.style.color = 'var(--gold-light)';
-        setTimeout(() => {
-          btn.innerHTML = originalHtml;
-          btn.style.borderColor = '';
-          btn.style.color = '';
-        }, 2200);
-      }).catch(() => {
-        const ta = document.createElement('textarea');
-        ta.value = textToCopy;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        btn.innerHTML = '✓ COPIED!';
-        setTimeout(() => {
-          btn.innerHTML = originalHtml;
-        }, 2200);
-      });
+function initVenueActions() {
+  const btnCopy = document.getElementById('btn-copy-address');
+  if (!btnCopy) return;
+
+  btnCopy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(VENUE_ADDRESS_TEXT);
+      showToast("Sanctuary Address Copied to Clipboard");
+    } catch {
+      showToast("Venue Address: Grand Wedding Hall, Bengaluru");
+    }
+  });
+}
+
+/* ============================================================
+   8. BENEDICTIONS & DUAS WALL (INTERACTIVE CHIPS)
+   ============================================================ */
+
+function initBenedictionsWall() {
+  const chips = document.querySelectorAll('.dua-chip-btn');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const rect = chip.getBoundingClientRect();
+      goldCanvasEngine.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 35);
+      audioSynth.playChime();
+
+      showToast("Jazakallahu Khair for Your Heartfelt Dua!");
     });
   });
 }
 
-initCalendarAndCopy();
+/* ============================================================
+   10. CUSTOM INTERACTIVE CURSOR (FINE POINTERS)
+   ============================================================ */
+
+function initCustomCursor() {
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if (!dot || !ring || !window.matchMedia('(pointer: fine)').matches) return;
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+  }, { passive: true });
+
+  function renderRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+    requestAnimationFrame(renderRing);
+  }
+
+  renderRing();
+
+  const interactives = 'a, button, input, select, textarea, label, [role="button"]';
+  document.querySelectorAll(interactives).forEach((el) => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+}
 
 /* ============================================================
-   PREVENT HORIZONTAL SCROLL
+   11. 3D TILT ON MOORISH HERO PORTAL
+   ============================================================ */
+
+function initHeroPortal3DTilt() {
+  const portal = document.getElementById('hero-portal-card');
+  if (!portal || !window.matchMedia('(pointer: fine)').matches) return;
+
+  const heroSection = document.getElementById('hero');
+  if (!heroSection) return;
+
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = portal.getBoundingClientRect();
+    const portalCenterX = rect.left + rect.width / 2;
+    const portalCenterY = rect.top + rect.height / 2;
+
+    const deltaX = (e.clientX - portalCenterX) / (window.innerWidth / 2);
+    const deltaY = (e.clientY - portalCenterY) / (window.innerHeight / 2);
+
+    const rotateX = -deltaY * 5;
+    const rotateY = deltaX * 6;
+
+    portal.style.transform = `rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+  });
+
+  heroSection.addEventListener('mouseleave', () => {
+    portal.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  });
+}
+
+/* ============================================================
+   12. MOBILE NAVIGATION DRAWER & SCROLL SPY
+   ============================================================ */
+
+function initNavigation() {
+  const header = document.getElementById('luxury-header');
+  const hamBtn = document.getElementById('hamburger-toggle');
+  const closeBtn = document.getElementById('drawer-close');
+  const drawer = document.getElementById('editorial-drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  const drawerLinks = document.querySelectorAll('[data-drawer-link]');
+  const desktopLinks = document.querySelectorAll('[data-nav-item]');
+
+  // Header scroll appearance
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Drawer Toggle
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    hamBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    hamBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  if (hamBtn) hamBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  drawerLinks.forEach((link) => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
+
+  // Scrollspy for desktop navigation
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 200;
+
+    sections.forEach((sec) => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      const id = sec.getAttribute('id');
+
+      if (scrollPos >= top && scrollPos < top + height) {
+        desktopLinks.forEach((link) => {
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, { passive: true });
+}
+
+/* ============================================================
+   MASTER INITIALIZATION
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.documentElement.style.overflowX = 'hidden';
-  document.body.style.overflowX = 'hidden';
+  initEnvelopeController();
+  initAudioController();
+  initCountdownVault();
+  initCalendarSync();
+  initVenueActions();
+  initBenedictionsWall();
+  initCustomCursor();
+  initHeroPortal3DTilt();
+  initNavigation();
 });
